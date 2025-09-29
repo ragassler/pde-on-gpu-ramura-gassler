@@ -14,9 +14,11 @@
 - **Core packages** (TBD):  
 
 ## 📁 Repository Structure
+```bash
 ├─ homework-2/
 │ ├─ just-a-test.txt
 └─ README.md
+```
 
 ## 🚀 Getting Started
 
