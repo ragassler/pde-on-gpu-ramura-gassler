@@ -6,31 +6,39 @@ using CairoMakie
     dc      = 1.0
     vx      = 10.0
     vy      = -10.0
-    da      = 1000.0
-    re      = π + sqrt(π^2 + da)
-    ρ       = (lx / (dc * re))^2
+
     # numerics
-    nt      = 100
+    nt      = 100 
     nx      = 200
     ny      = 201
+    dx      = lx / nx
+    dy      = ly / ny
+
+    # derived physics
+    dt      = min(dx / abs(vx), dy / abs(vy)) / 2
+    da      = lx^2 / dc / dt
+    re      = π + sqrt(π^2 + da)
+    ρ       = (lx / (dc * re))^2
+
+    # convergence numerics
     ϵtol    = 1e-8
     maxiter = 10nx
     ncheck  = ceil(Int, 0.02nx)
+
     # derived numerics
-    dx      = lx / nx
-    dy      = ly / ny
     xc      = LinRange(dx / 2, lx - dx / 2, nx)
     yc      = LinRange(dy / 2, ly - dy / 2, ny)
     dτ      = min(dx, dy) / sqrt(1 / ρ) / sqrt(2)
-    dt      = min(dx / abs(vx), dy / abs(vy)) / 2
+    
     # array initialisation
     C       = @. exp(-(xc - lx / 4)^2 - (yc' - 3ly / 4)^2)
     C_old   = copy(C)
     qx      = zeros(Float64, nx - 1, ny)
     qy      = zeros(Float64, nx, ny - 1)
     
+
     # time loop
-    #plots setup
+        # plots setup
 
     fig = Figure(size=(400, 650))
     ax1 = Axis(fig[1, 1]; 
@@ -43,7 +51,7 @@ using CairoMakie
                 yscale=log10, 
                 xlabel="iter/nx", 
                 ylabel="err",
-                limits = ((0.0, 1.0), (1e-10, 1e0)))
+                limits = ((0.0, 0.2), (1e-10, 1e0)))
     
     hm  = heatmap!(ax1, xc, yc, C;
                 colormap=:roma, 

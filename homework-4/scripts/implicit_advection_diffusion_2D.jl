@@ -7,23 +7,30 @@ default(size=(1200, 800), framestyle=:box, label=false, grid=false, margin=10mm,
     dc      = 1.0
     vx      = 10.0
     vy      = -10.0
-    da      = 1000.0
-    re      = π + sqrt(π^2 + da)
-    ρ       = (lx / (dc * re))^2
+
     # numerics
-    nt      = 50
+    nt      = 50 #for only diffusion use nt=100
     nx      = 200
     ny      = 201
+    dx      = lx / nx
+    dy      = ly / ny
+
+    # derived physics
+    dt      = min(dx / abs(vx), dy / abs(vy)) / 2
+    da      = lx^2 / dc / dt
+    re      = π + sqrt(π^2 + da)
+    ρ       = (lx / (dc * re))^2
+
+    # convergence numerics
     ϵtol    = 1e-8
     maxiter = 10nx
     ncheck  = ceil(Int, 0.02nx)
+
     # derived numerics
-    dx      = lx / nx
-    dy      = ly / ny
     xc      = LinRange(dx / 2, lx - dx / 2, nx)
     yc      = LinRange(dy / 2, ly - dy / 2, ny)
     dτ      = min(dx, dy) / sqrt(1 / ρ) / sqrt(2)
-    dt      = min(dx / abs(vx), dy / abs(vy)) / 2
+
     # array initialisation
     C       = @. exp(-(xc - lx / 4)^2 - (yc' - 3ly / 4)^2)
     C_old   = copy(C)
@@ -62,10 +69,10 @@ default(size=(1200, 800), framestyle=:box, label=false, grid=false, margin=10mm,
         #-------------------END ADVECTION-------------------
 
         # visualisation
-        p1 = heatmap(xc, yc, C'; xlims=(0, lx), ylims=(0, ly), clims=(0, 1), aspect_ratio=1,
+        p1 = Plots.heatmap(xc, yc, C'; xlims=(0, lx), ylims=(0, ly), clims=(0, 1), aspect_ratio=1,
                     xlabel="lx", ylabel="ly", title="iter/nx=$(round(iter/nx,sigdigits=3))")
-        p2 = plot(iter_evo, err_evo; xlabel="iter/nx", ylabel="err", yscale=:log10, grid=true, markershape=:circle, markersize=10)
-        plot(p1, p2; layout=(2, 1))
+        p2 = Plots.plot(iter_evo, err_evo; xlabel="iter/nx", ylabel="err", yscale=:log10, grid=true, markershape=:circle, markersize=10)
+        Plots.plot(p1, p2; layout=(2, 1))
 
     end
     gif(anim, "implicit_diffusion_advection_2D.gif", fps=10)
