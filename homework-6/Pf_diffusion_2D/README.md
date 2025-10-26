@@ -18,7 +18,7 @@ julia --project -e 'using Pkg; Pkg.activate("."); Pkg.instantiate()'
 ### Task 1: memcopy
  Estimate sustained memory throughput using a simple memcopy(+add) kernel and relate it to the theoretical memory ceiling 
 
-![T_eff vs size (memcopy)](docs/memcopy.svg)
+![T_eff vs size (memcopy)](docs/memcopy.png)
 
 
 fistly we see that the btool gives better results by choosing the optimal single iteration wich was the fastest. We further can observe that for my computer we have from literature a T_peak of 128 GB/s this can be seen also from this Benchmark.
@@ -36,7 +36,7 @@ note that for this task since i used Btool i modified the functions by deleting 
 To benchmark all files i created a new file called benchmark.jl that calls all functions and performs the benchmark
 
 
-![Pf_diffusion_2D_all](docs/Pf_diffusion_2D_all.svg)
+![Pf_diffusion_2D_all](docs/Pf_diffusion_2D_all.png)
 
 The results show the expected speed up of T_eff its interessting that: - for higher resolutions the Teff and perf variants seem to be the same. 
 

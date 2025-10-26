@@ -2,7 +2,7 @@ using Plots, Plots.Measures, Printf, BenchmarkTools
 using LoopVectorization
 using Base.Threads; @info "threads" nthreads()
 
-default(size=(600, 500), framestyle=:box, label=false, grid=false, margin=10mm, lw=6, labelfontsize=11, tickfontsize=11, titlefontsize=11)
+default(size=(600, 500), framestyle=:box, label=false, grid=false, margin=10mm, lw=1, labelfontsize=11, tickfontsize=11, titlefontsize=11)
 
 
 
@@ -19,8 +19,10 @@ end
 function compute_kp!(C, C2, A, ny, nx)
 
 
-    @tturbo for iy=1:ny, ix=1:nx
-        @inbounds C2[ix, iy] = C[ix, iy] + A[ix, iy]
+    Threads.@threads for iy=1:ny
+        for ix=1:nx
+            @inbounds C2[ix, iy] = C[ix, iy] + A[ix, iy]
+        end
     end
 
     return nothing
@@ -109,8 +111,10 @@ for i=1:length(nx)
 end
 
 ### Plotting ###
-plot(nx, T_eff_ap; xscale=:log2, label="Array Broadcasting Btool", xlabel="nx=ny", ylabel="T_eff [GB/s]", legend=:topright, markershape=:circle, markersize=10, linesize=1.5)
-plot!(nx, T_eff_kp; label="Loop Vectorization Btool", markershape=:diamond, markersize=10, linesize=1.5)
+plot(nx, T_eff_ap; xscale=:log2, label="ap Btool", xlabel="nx=ny", ylabel="T_eff [GB/s]", legend=:topright, markershape=:circle, markersize=5, linesize=0.5)
+plot!(nx, T_eff_kp; label="kp Btool", markershape=:diamond, markersize=5, linesize=0.5)
+
+T_btool_max = max(maximum(T_eff_ap),maximum(T_eff_kp))
 
 
 ### Without BenchmarkTools ###
@@ -118,6 +122,10 @@ for i=1:length(nx)
     T_eff_ap[i], T_eff_kp[i] = memcopy(nx[i], ny[i]; bench=:loop)
 end
 ### Plotting ###
-plot!(nx, T_eff_ap; label="Array Broadcasting Loop", markershape=:circle, markersize=10, linesize=1.5)
-plot!(nx, T_eff_kp; label="Loop Vectorization Loop", markershape=:diamond, markersize=10, linesize=1.5)
-savefig("memcopy.pdf")
+plot!(nx, T_eff_ap; label="ap Loop", markershape=:circle, markersize=5, linesize=0.5)
+plot!(nx, T_eff_kp; label="kp Loop", markershape=:diamond, markersize=5, linesize=0.5)
+hline!([68.0]; linestyle=:dot, color=:black, label="vendor max")
+
+T_loop_max = max(maximum(T_eff_ap),maximum(T_eff_kp))
+hline!([max(T_btool_max,T_loop_max)]; linestyle=:dash, color=:gray, label="benchmark max")
+savefig("memcopy.png")
