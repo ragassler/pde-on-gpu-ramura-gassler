@@ -99,11 +99,11 @@ What i did for this exercise
 ```bash
 (L7TestingExercise) pkg> test
      Testing L7TestingExercise
-      Status `/tmp/jl_nTA6vR/Project.toml`
+      Status `/tmp/jl_GYSEAk/Project.toml`
   [e93f01c1] L7TestingExercise v0.1.0 `~/Documents/ETH/Master/sem_1/PDEGPU/assignments/pde-on-gpu-ramura-gassler/homework-7/L7TestingExercise`
   [9a3f8284] Random v1.11.0
   [8dfed614] Test v1.11.0
-      Status `/tmp/jl_nTA6vR/Manifest.toml`
+      Status `/tmp/jl_GYSEAk/Manifest.toml`
   [e93f01c1] L7TestingExercise v0.1.0 `~/Documents/ETH/Master/sem_1/PDEGPU/assignments/pde-on-gpu-ramura-gassler/homework-7/L7TestingExercise`
   [2a0f44e3] Base64 v1.11.0
   [b77e0a4c] InteractiveUtils v1.11.0
@@ -117,7 +117,6 @@ What i did for this exercise
 Test Summary:       | Pass  Total  Time
 Diff function tests |    2      2  0.3s
 Test Summary:      | Pass  Total  Time
-Diffusion 1D tests |   20     20  0.0s
+Diffusion 1D tests |   20     20  0.1s
      Testing L7TestingExercise tests passed 
-
 ```
