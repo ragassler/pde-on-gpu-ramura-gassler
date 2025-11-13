@@ -26,6 +26,10 @@ using Printf # for formatted printing
 
 
 
+#--------------------------------------------------------------------------#
+#-----------------------2D kernel functions: for parallelization -----------#
+#--------------------------------------------------------------------------#
+
 @parallel_indices (ix, iy) function compute_flux!(dQx, dQy, Pf, k_ηf, _1_θ_dτ, αρgx, αρgy, T, _dx, _dy)
     nx, ny = size(Pf)
     if (ix <= nx - 1 && iy <= ny) dQx[ix+1, iy] -= (dQx[ix+1, iy] + k_ηf * (_dx * (Pf[ix+1, iy] - Pf[ix, iy]) - αρgx * 0.5*(T[ix+1, iy] + T[ix, iy]))) * _1_θ_dτ  end
@@ -101,7 +105,9 @@ end
 end
 
 
-
+#----------------------------------------------------------------------------#
+#------------------ POROUS CONVECTION 2D IMPLICIT SOLVER FUNCTION -----------#
+#----------------------------------------------------------------------------#
 @views function porous_convection_implicit_2D_xpu(;do_viz=false, do_check=false)
     # physics
     lx, ly     = 40.0, 20.0
@@ -116,18 +122,17 @@ end
 
     # numerics
 
-    # ------Use these for Results on GPU------ ##
+    ## -------------------------------------------------------------------------------------------##
+    ## ------------------ SIMULATION PARAMETERS choose wisely nx, ny, nz and nt ------------------##
     nx,ny      = 1023, 511
     nt         = 4000
-    # -------------------------------------- ##
-
-
     re_D       = 4π
     cfl        = 1.0 / sqrt(2.1)
     maxiter    = 10max(nx, ny)
     ϵtol       = 1e-6
     nvis       = 50
     ncheck     = ceil(2max(nx, ny))
+    ## -------------------------------------------------------------------------------------------##
         
     # derived numerics
     dx      = lx / nx

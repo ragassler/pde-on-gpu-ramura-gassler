@@ -18,6 +18,11 @@ using Plots, Plots.Measures, Printf
 @views avz(A) = 0.5 .* (A[:, :, 1:end-1] .+ A[:, :, 2:end])
 
 
+#----------------------------------------------------------------------------------------------------------------------------------------------#
+#-----------------------3D kernel functions: for parallelization ------------------------------------------------------------------------------#
+#----------------------------------------------------------------------------------------------------------------------------------------------#
+
+# compute fluxes with parallel indices
 
 @parallel_indices (ix, iy, iz) function compute_flux!(dQx, dQy, dQz, Pf, k_ηf, _1_θ_dτ, g, T, _dx, _dy, _dz)
     nx, ny, nz = size(Pf)
@@ -27,16 +32,23 @@ using Plots, Plots.Measures, Printf
     return nothing
 end
 
+# parallel update of Pf
+
 @parallel function update_Pf!(Pf, dQx, dQy, dQz, _dx, _dy, _dz, _β_dτ)
 
     @all(Pf) = @all(Pf) - _β_dτ * ( @d_xa(dQx) * _dx + @d_ya(dQy) * _dy + @d_za(dQz) * _dz )
     return nothing
 end
 
+# parallel compute of residual
+
 @parallel function compute_residual!(r_Pf, dQx, dQy, dQz, _dx, _dy, _dz)
     @all(r_Pf) = @all(r_Pf) + ( @d_xa(dQx) * _dx + @d_ya(dQy) * _dy + @d_za(dQz) * _dz )
     return nothing
 end
+
+
+# compute temperature fluxes with parallel indices
 
 @parallel_indices (ix, iy, iz) function compute_temp_flux!(dQx, dQy, dQz, T, λ_ρCp, _1_θ_dτ, _dx, _dy, _dz)
     nxx, nyx, nzx = size(dQx)
@@ -57,6 +69,9 @@ end
     return nothing
 end
 
+
+# compute dTdt with parallel indices
+
 @parallel_indices (ix, iy, iz) function compute_dTdt!(dTdt, T, T_old, _dt, qDx, qDy, qDz, _ϕ, _dx, _dy, _dz)
     nx, ny, nz = size(dTdt)
     if (ix <= nx && iy <= ny && iz <= nz)
@@ -72,6 +87,9 @@ end
     return nothing
 end
 
+
+# compute temperature update with parallel indices
+
 @parallel_indices (ix, iy, iz) function update_T!(T, dTdt, dQx, dQy, dQz, _dx, _dy, _dz, _temp)
     nx, ny, nz = size(dTdt)
     if (ix <= nx && iy <= ny && iz <= nz)
@@ -80,6 +98,8 @@ end
     return nothing
 end
 
+# compute temperature residual with parallel indices would be possible also with @parallel
+
 @parallel_indices (ix, iy, iz) function compute_residual_T!(r_T, dTdt, dQx, dQy, dQz, _dx, _dy, _dz)
     nx, ny, nz = size(r_T)
     if (ix <= nx && iy <= ny && iz <= nz)
@@ -87,6 +107,8 @@ end
     end
     return nothing
 end
+
+# boundary conditions
 
 @parallel_indices (iy, iz) function bc_x!(A)
     A[1  , iy, iz] = A[2    , iy, iz]
@@ -107,7 +129,9 @@ end
 end
 
 
-
+##---------------------------------------------------------------------------------------------------------------------------------------------##
+##-------------------------------------------------- POROUS CONVECTION 3D IMPLICIT SOLVER FUNCTION --------------------------------------------##
+##---------------------------------------------------------------------------------------------------------------------------------------------##
 
 @views function porous_convection_implicit_3D_xpu(;do_viz=false, do_check=false)
     # physics
@@ -122,7 +146,8 @@ end
 
     # numerics
 
-
+    ## -------------------------------------------------------------------------------------------##
+    ## ------------------ SIMULATION PARAMETERS choose wisely nx, ny, nz and nt ------------------##
     nx, ny, nz = 255, 127, 127
     nt         = 2000
     re_D       = 4π
@@ -131,6 +156,8 @@ end
     ϵtol       = 1e-6
     nvis       = 50
     ncheck     = ceil(2max(nx, ny, nz))
+    ## -------------------------------------------------------------------------------------------##
+
         
     # derived numerics
     dx      = lx / nx
