@@ -5,7 +5,7 @@ const USE_GPU = false
 using ParallelStencil
 import ParallelStencil: @reset_parallel_stencil
 
-using Plots, Plots.Measures, Printf
+using Printf
 
 include("../scripts/PorousConvection_3D_xpu_test.jl")
 include("../scripts/PorousConvection_2D.jl")

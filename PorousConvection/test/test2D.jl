@@ -1,7 +1,8 @@
 const USE_GPU = false
 
 using Printf # for formatted printing
-
+using ParallelStencil
+import ParallelStencil: @reset_parallel_stencil
 
 using Test
 using Random

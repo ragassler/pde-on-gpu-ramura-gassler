@@ -3,11 +3,16 @@
 [![Build Status](https://github.com/ragassler/pde-on-gpu-ramura-gassler/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/ragassler/pde-on-gpu-ramura-gassler/actions/workflows/CI.yml?query=branch%3Amain)
 
 
+A collection of 2D/3D porous convection solvers written in Julia, with CPU/GPU backends via [ParallelStencil.jl]. Includes scripts for running simulations, visualization helpers, and a test suite with unit and reference tests.
+
+---
 
 ## Setup
 
-**Julia version:** ≥ 1.9  
+**Julia:** ≥ 1.9  
 **Packages:** `ParallelStencil`, `Plots`, `GLMakie`, `Printf`, `Test`, `CUDA`, `JLD2`
+
+in folders : `scripts` and `vis_scripts_data` have their own environments activate them before running
 
 ```bash
 julia --project -e 'using Pkg; Pkg.activate("."); Pkg.instantiate()'
@@ -25,33 +30,28 @@ julia --project -e 'using Pkg; Pkg.activate("."); Pkg.instantiate()'
 │ ├─ PorousConvection_3D_xpu.jl
 │ ├─ PorousConvection_2D.jl
 ├─ docs
-│ ├─ Results in png and mp4
+│ ├─ Results in png and mp4             # results of the simulation
 ├─ test                    
-│ ├─ scripts/                           
-│ ├─ test/                              
-│ ├─ Manifest.toml   
-│ ├─ Project.toml                       # activate . 
-├─ vis_scripts_data                           #JLD2 files for daint->remote
-├─ benchmark_plot.jl                    # plots the test_data benchmark
-├─ nummerical_test.jl                   # reference test of gpu version
-├─ lecture7_ex1_sub.ipynb               # solution Ex 1.
-└─ README.md
+│ ├─ runtests.jl                          
+│ ├─ test2D.jl                              
+│ ├─ test3D.jl                         
+├─ vis_scripts_data                     # JLD2 files for daint->remote its own project with GLMakie
+└─ README.md                            # report
 ```
 
 **scripts:** contain the actual source code for this project.
 
 ```bash
-├─ scripts
-│ ├─ Pf_diffusion_2D_perf_xpu.jl   # task 1.2 parallel indices                    
-│ ├─ Pf_diffusion_2D_xpu.jl        # task 1.1 parallel using parallelstencil and macros            
-│ ├─ PorousConvection_2D_xpu_test.jl  # same as the next but lower resolution and additional unit testing function 
-                                      # it has the same nummerical simulation which can be run on daint.
-                                      # but for local testing and nummerical verification
-│ ├─ PorousConvection_2D_xpu.jl      # the Porous Convection in 2D for daint run 
-│ ├─ PorousConvection_3D_xpu_test.jl # "" 3D "" 
-│ ├─ PorousConvection_3D_xpu.jl      # "" 3D ""
-│ ├─ PorousConvection_2D.jl         # verified 2D nummerical code produced in submission 5 for reference testing
+├─ scripts                             # its own project with Plots, CairoMakie and so on.
+│  ├─ Pf_diffusion_2D_perf_xpu.jl      # Task 1.2: parallel indices
+│  ├─ Pf_diffusion_2D_xpu.jl           # Task 1.1: ParallelStencil
+│  ├─ PorousConvection_2D_xpu_test.jl  # Low-res 2D + unit tests 
+│  ├─ PorousConvection_2D_xpu.jl       # 2D porous convection (CPU/GPU)
+│  ├─ PorousConvection_3D_xpu_test.jl  # Low-res 3D + unit tests 
+│  ├─ PorousConvection_3D_xpu.jl       # 3D porous convection (CPU/GPU)
+│  ├─ PorousConvection_2D.jl           # Verified 2D reference (from HW5)
 ```
+Note: The `_test.jl` variants are numerically identical to their counterparts; they differ only in parameters (grid size, time steps) and include extra helpers for unit testing.
 
 ## 2D Porous Convection (XPU)
 
@@ -72,11 +72,8 @@ Source: `scripts/PorousConvection_2D_xpu.jl`
 ![porous_conv2d](docs/porous_convection.gif)
 
 ### Make Plots
-
 1. Download the generated frames/ directory.
-
 2. Move it into vis_scripts_data/.
-
 3. Run:
 ```bash
 julia --project vis.jl
@@ -99,11 +96,8 @@ Source: `scripts/PorousConvection_3D_xpu.jl`
 ![porous_3d_xpu](docs/T_3D_with_slice.png)
 
 ### Visualize 3D results
-
 1. Download the produced .bin file.
-
 2. Move it into vis_scripts_data/.
-
 3. Run either:
 
 ```bash
@@ -116,15 +110,12 @@ julia --project vis_3D_slice.jl
 
 ## Unit and Reference Testing
 
-Note that the _test.jl source codes are nummerical identical to the source code only difference are some parameters like grid size, number of timesteps.
-and addtional unit_tesing function for unit testing.
+We provide unit tests (kernel-level checks) and reference tests (end-to-end) for both 2D and 3D:
 
-For Nummerical Correctness we have for each 2D and 3D a unit and a reference test
-The unit tests are the same where we check one kernel_function for its correctness 
+**Unit tests:** Validate individual kernels for correctness.
 
-For reference in 2D we can verify nummerical corectness by reference testing the whole simulation against the already verified 2D simulation we have from Homework 5.
+**2D reference test:** Compares the full 2D XPU simulation against the verified 2D reference solver (PorousConvection_2D.jl from HW5).
 
-For 3D the reference testing is tricky. At the moment we run simulation with Ra=10. In Theory with such low Ra we get only diffusion no convection.
-Therefore the reference test checks if that holds for the nummerical simulation.
+**3D reference test:** For low Rayleigh number (e.g., Ra = 10), theory predicts diffusion-dominated behavior (no convection). The test verifies that the numerical solution exhibits this regime.
 
-To run the test use Pkg mode test suite.
+To run the test go into Pkg mode run command `test`
