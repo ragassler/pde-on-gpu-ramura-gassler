@@ -202,7 +202,6 @@ end
     qDy_c   = @zeros(nx, ny, nz)
     qDz_c   = @zeros(nx, ny, nz)
 
-    t_it_avg = 0.0
 
     iframe = 0
 
@@ -234,11 +233,8 @@ end
 
             # iteration loop
             iter = 1; err_D = 2ϵtol; err_T = 2ϵtol
-            t_tic = 0.0; niter = 0
             while max(err_D, err_T) >= ϵtol && iter <= maxiter
 
-
-                if (iter==11) t_tic = Base.time(); niter = 0 end
                 # pressure
                 @parallel compute_flux!(qDx, qDy, qDz, Pf, k_ηf, _1_θ_dτ_D, αρg, T, _dx, _dy, _dz)
                 @parallel update_Pf!(Pf, qDx, qDy, qDz, _dx, _dy, _dz, _β_dτ_D)
@@ -271,11 +267,7 @@ end
                 end
 
                 iter += 1
-                niter += 1
             end
-
-            t_it = (Base.time() - t_tic) / niter
-            t_it_avg += t_it
 
             
             # visualisation
@@ -284,12 +276,6 @@ end
                 png(p1, @sprintf("viz3D_out/%04d.png", iframe += 1))
             end
         end
-    
-
-    A_eff = 45*nx*ny*nz * 8 / 1e9
-    T_eff = A_eff / t_it_avg
-    @printf("Time = %.3e\n", t_it_avg)
-    @printf("A_eff=%1.3f GB, T_eff=%1.3f GB/s\n", A_eff, T_eff)
 
     return nothing
 

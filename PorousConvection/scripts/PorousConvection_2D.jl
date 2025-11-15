@@ -126,3 +126,16 @@ end
 
     return P
 end
+
+@views function unit_compute_dTdt_test(dTdt, T, dt, qTxx, qTyy, dxx, dyy, ϕ)
+
+
+
+    # test compute_dTdt! kernel
+
+    dTdt             .= (T[2:end-1, 2:end-1] .- T[2:end-1, 2:end-1]) ./ dt .+ (max.(qTxx[2:end-2, 2:end-1], 0.0) .* diff(T[1:end-1, 2:end-1], dims=1) ./ dxx .+
+                        min.(qTxx[3:end-1, 2:end-1], 0.0) .* diff(T[2:end, 2:end-1], dims=1) ./ dxx .+
+                        max.(qTyy[2:end-1, 2:end-2], 0.0) .* diff(T[2:end-1, 1:end-1], dims=2) ./ dyy .+
+                        min.(qTyy[2:end-1, 3:end-1], 0.0) .* diff(T[2:end-1, 2:end], dims=2) ./ dyy) ./ ϕ
+    return dTdt
+end

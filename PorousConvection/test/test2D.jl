@@ -14,7 +14,7 @@ print("imported modules\n")
 
 ## unit testing for porous_convection_2D_xpu.jl ##
 
-@testset "verifying kernel functions" begin
+@testset "verifying kernel functions (update pressure)" begin
 
     # genarete Random input data
     nx, ny = 63, 31
@@ -48,9 +48,7 @@ print("imported modules\n")
 end
 
 
-
 @testset "verifying porous_convection_xpu" begin
-
 
     T_new = porous_convection_implicit_2D_xpu(;do_viz=false, do_check=true)
     T_ref = porous_convection_implicit_2D(;do_viz=true)

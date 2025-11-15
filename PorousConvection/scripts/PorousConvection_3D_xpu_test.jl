@@ -20,17 +20,16 @@ using Printf
 
 
 
-@views avx(A) = 0.5 .* (A[1:end-1, :, :] .+ A[2:end, :, :])
-@views avy(A) = 0.5 .* (A[:, 1:end-1, :] .+ A[:, 2:end, :])
-@views avz(A) = 0.5 .* (A[:, :, 1:end-1] .+ A[:, :, 2:end])
-
+@inline avx(T, ix, iy, iz) = 0.5 * (T[ix+1, iy, iz] + T[ix, iy, iz])
+@inline avy(T, ix, iy, iz) = 0.5 * (T[ix, iy+1, iz] + T[ix, iy, iz])
+@inline avz(T, ix, iy, iz) = 0.5 * (T[ix, iy, iz+1] + T[ix, iy, iz])
 
 
 @parallel_indices (ix, iy, iz) function compute_flux!(dQx, dQy, dQz, Pf, k_ηf, _1_θ_dτ, g, T, _dx, _dy, _dz)
     nx, ny, nz = size(Pf)
     if (ix <= nx - 1 && iy <= ny && iz <= nz) dQx[ix+1, iy, iz] -= (dQx[ix+1, iy, iz] + k_ηf * (_dx * (Pf[ix+1, iy, iz] - Pf[ix, iy, iz]))) * _1_θ_dτ  end
     if (ix <= nx && iy <= ny - 1 && iz <= nz) dQy[ix, iy+1, iz] -= (dQy[ix, iy+1, iz] + k_ηf * (_dy * (Pf[ix, iy+1, iz] - Pf[ix, iy, iz]))) * _1_θ_dτ  end
-    if (ix <= nx && iy <= ny && iz <= nz - 1) dQz[ix, iy, iz+1] -= (dQz[ix, iy, iz+1] + k_ηf * (_dz * (Pf[ix, iy, iz+1] - Pf[ix, iy, iz]) - g * 0.5*(T[ix, iy, iz+1] + T[ix, iy, iz]))) * _1_θ_dτ  end
+    if (ix <= nx && iy <= ny && iz <= nz - 1) dQz[ix, iy, iz+1] -= (dQz[ix, iy, iz+1] + k_ηf * (_dz * (Pf[ix, iy, iz+1] - Pf[ix, iy, iz]) - g * avz(T, ix, iy, iz))) * _1_θ_dτ  end
     return nothing
 end
 
@@ -79,19 +78,14 @@ end
     return nothing
 end
 
-@parallel_indices (ix, iy, iz) function update_T!(T, dTdt, dQx, dQy, dQz, _dx, _dy, _dz, _temp)
-    nx, ny, nz = size(dTdt)
-    if (ix <= nx && iy <= ny && iz <= nz)
-        T[ix+1, iy+1, iz+1] -= (dTdt[ix, iy, iz] + ( @d_xa(dQx) * _dx ) + ( @d_ya(dQy) * _dy ) + ( @d_za(dQz) * _dz )) * _temp
-    end
+@parallel function update_T!(T, dTdt, dQx, dQy, dQz, _dx, _dy, _dz, _temp)
+    @inn(T) = @inn(T) - (@all(dTdt) + _dx * @d_xa(dQx) + _dy * @d_ya(dQy) + _dz * @d_za(dQz)) * _temp
     return nothing
 end
 
-@parallel_indices (ix, iy, iz) function compute_residual_T!(r_T, dTdt, dQx, dQy, dQz, _dx, _dy, _dz)
-    nx, ny, nz = size(r_T)
-    if (ix <= nx && iy <= ny && iz <= nz)
-        r_T[ix, iy, iz] += dTdt[ix, iy, iz] + ( @d_xa(dQx) * _dx ) + ( @d_ya(dQy) * _dy ) + ( @d_za(dQz) * _dz )
-    end
+
+@parallel function compute_residual_T!(r_T, dTdt, dQx, dQy, dQz, _dx, _dy, _dz)
+    @all(r_T) = @all(r_T) + ( @all(dTdt) + ( @d_xa(dQx) * _dx ) + ( @d_ya(dQy) * _dy ) + ( @d_za(dQz) * _dz ) )
     return nothing
 end
 
@@ -191,7 +185,6 @@ end
     qDy_c   = @zeros(nx, ny, nz)
     qDz_c   = @zeros(nx, ny, nz)
 
-    t_it_avg = 0.0
 
     iframe = 0
 
@@ -223,11 +216,9 @@ end
 
             # iteration loop
             iter = 1; err_D = 2ϵtol; err_T = 2ϵtol
-            t_tic = 0.0; niter = 0
             while max(err_D, err_T) >= ϵtol && iter <= maxiter
 
 
-                if (iter==11) t_tic = Base.time(); niter = 0 end
                 # pressure
                 @parallel compute_flux!(qDx, qDy, qDz, Pf, k_ηf, _1_θ_dτ_D, αρg, T, _dx, _dy, _dz)
                 @parallel update_Pf!(Pf, qDx, qDy, qDz, _dx, _dy, _dz, _β_dτ_D)
@@ -260,20 +251,8 @@ end
                 end
 
                 iter += 1
-                niter += 1
             end
-
-            t_it = (Base.time() - t_tic) / niter
-            t_it_avg += t_it
-
-
         end
-    
-
-    A_eff = 45*nx*ny*nz * 8 / 1e9
-    T_eff = A_eff / t_it_avg
-    @printf("Time = %.3e\n", t_it_avg)
-    @printf("A_eff=%1.3f GB, T_eff=%1.3f GB/s\n", A_eff, T_eff)
 
     return Array(T), Array(qDz)
 
@@ -289,19 +268,32 @@ end
 
     # make GPU CuArrays
     Pf_d = Data.Array(Pf)
-    #
-    println("sizes of arrays")
-    println("Pf: ", size(Pf))
+    
+
     dQx_d = Data.Array(dQx)
-    println("dQx: ", size(dQx))
     dQy_d = Data.Array(dQy)
-    println("dQy: ", size(dQy))
     dQz_d = Data.Array(dQz)
-    println("dQz: ", size(dQz))
 
     # call update_pf 
     @parallel update_Pf!(Pf_d, dQx_d, dQy_d, dQz_d, _dx, _dy, _dz, _β_dτ)
 
     return Array(Pf_d)
+
+end
+
+@views function unit_compute_dTdt_kernel_test(T, _dt, qDx, qDy, qDz, _dx, _dy, _dz, _ϕ)
+
+    # make GPU CuArrays
+    T_d = Data.Array(T)
+    qDx_d = Data.Array(qDx)
+    qDy_d = Data.Array(qDy)
+    qDz_d = Data.Array(qDz)
+
+    dTdt_d = @zeros(size(T, 1)-2, size(T, 2)-2, size(T, 3)-2)
+
+    # call compute_dTdt 
+    @parallel compute_dTdt!(dTdt_d, T_d, T_d, _dt, qDx_d, qDy_d, qDz_d, _ϕ, _dx, _dy, _dz)
+
+    return Array(dTdt_d)
 
 end

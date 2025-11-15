@@ -13,7 +13,7 @@ include("../scripts/PorousConvection_2D.jl")
 
 ## unit testing for porous_convection_3D_xpu.jl ##
 
-@testset "verifying kernel functions" begin
+@testset "verifying kernel functions (update pressure)" begin
 
     # genarete Random input data
     nx, ny, nz = 63, 31, 31
@@ -48,6 +48,42 @@ include("../scripts/PorousConvection_2D.jl")
 
 
 end
+
+@testset "verfying kernel functions (compute dTdt)" begin
+
+    # genarete Random input data
+    nx, ny, nz = 63, 31, 31
+    T     = randn(Float64, nx, ny, nz)
+    dTdt_ref = zeros(Float64, nx-2, ny-2)
+    qDx     = zeros(Float64, nx + 1, ny, nz)
+    qDy     = zeros(Float64, nx, ny + 1, nz)
+    qDz     = zeros(Float64, nx, ny, nz + 1)
+    dxx   = 0.1f0
+    dyy   = 0.1f0
+    dzz   = 0.1f0
+    dt    = 0.01f0
+    ϕ     = 0.3f0
+
+    _dxx = 1.0f0/dxx
+    _dyy = 1.0f0/dyy
+    _dzz = 1.0f0/dzz
+    _dt = 1.0f0/dt
+    _ϕ = 1.0f0/ϕ
+
+    # call reference kernel function
+    dTdt_ref = unit_compute_dTdt_test(dTdt_ref, T[:, :, 1], dt, qDx[:, :, 1], qDy[:, :, 1], dxx, dyy, ϕ)
+
+    # call xpu kernel function
+    dTdt_xpu = unit_compute_dTdt_kernel_test(T, _dt, qDx, qDy, qDz, _dxx, _dyy, _dzz, _ϕ)
+
+    # # test for 10 random indixes
+     for _ in 1:10
+         ix = rand(1:nx-2)
+         iy = rand(1:ny-2)
+         @test isapprox(dTdt_xpu[ix, iy, 1], dTdt_ref[ix, iy]; rtol=1e-5, atol=1e-8)
+     end
+end
+
 
 @testset "verifying porous_convection_3D_xpu" begin
 

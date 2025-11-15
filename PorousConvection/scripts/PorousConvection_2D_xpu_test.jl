@@ -12,8 +12,8 @@ else
 end
 
 
-@views avx(A) = 0.5 .* (A[1:end-1, :] .+ A[2:end, :])
-@views avy(A) = 0.5 .* (A[:, 1:end-1] .+ A[:, 2:end])
+@inline avx(T, ix, iy) = 0.5 * (T[ix+1, iy] + T[ix, iy])
+@inline avy(T, ix, iy) = 0.5 * (T[ix, iy+1] + T[ix, iy])
 
 
 #------------------------------------------------------------------------------#
@@ -25,24 +25,22 @@ end
 
 @parallel_indices (ix, iy) function compute_flux!(dQx, dQy, Pf, k_ηf, _1_θ_dτ, αρgx, αρgy, T, _dx, _dy)
     nx, ny = size(Pf)
-    if (ix <= nx - 1 && iy <= ny) dQx[ix+1, iy] -= (dQx[ix+1, iy] + k_ηf * (_dx * (Pf[ix+1, iy] - Pf[ix, iy]) - αρgx * 0.5*(T[ix+1, iy] + T[ix, iy]))) * _1_θ_dτ  end
-    if (ix <= nx && iy <= ny - 1) dQy[ix, iy+1] -= (dQy[ix, iy+1] + k_ηf * (_dy * (Pf[ix, iy+1] - Pf[ix, iy]) - αρgy * 0.5*(T[ix, iy+1] + T[ix, iy]))) * _1_θ_dτ end
+    if (ix <= nx - 1 && iy <= ny) dQx[ix+1, iy] -= (dQx[ix+1, iy] + k_ηf * (_dx * (Pf[ix+1, iy] - Pf[ix, iy]) - αρgx * avx(T, ix, iy))) * _1_θ_dτ  end
+    if (ix <= nx && iy <= ny - 1) dQy[ix, iy+1] -= (dQy[ix, iy+1] + k_ηf * (_dy * (Pf[ix, iy+1] - Pf[ix, iy]) - αρgy * avy(T, ix, iy))) * _1_θ_dτ  end
     return nothing
 end
 
-@parallel_indices (ix, iy) function update_Pf!(Pf, dQx, dQy, _dx, _dy, _β_dτ)
-    nx, ny = size(Pf)
-    if (ix <= nx && iy <= ny)
-        Pf[ix, iy] -= _β_dτ * ( @d_xa(dQx) * _dx + @d_ya(dQy) * _dy )
-    end
+@parallel function update_Pf!(Pf, dQx, dQy, _dx, _dy, _β_dτ)
+
+    @all(Pf) = @all(Pf) - _β_dτ * ( @d_xa(dQx) * _dx + @d_ya(dQy) * _dy )
+
     return nothing
 end
 
-@parallel_indices (ix, iy) function compute_residual!(r_Pf, dQx, dQy, _dx, _dy)
-    nx, ny = size(r_Pf)
-    if (ix <= nx && iy <= ny)
-        r_Pf[ix, iy] += ( @d_xa(dQx) * _dx + @d_ya(dQy) * _dy )
-    end
+@parallel function compute_residual!(r_Pf, dQx, dQy, _dx, _dy)
+
+    @all(r_Pf) = @all(r_Pf) + ( @d_xa(dQx) * _dx + @d_ya(dQy) * _dy )
+
     return nothing
 end
 
@@ -72,19 +70,16 @@ end
     return nothing
 end
 
-@parallel_indices (ix, iy) function update_T!(T, dTdt, dQx, dQy, _dx, _dy, _temp)
-    nx, ny = size(dTdt)
-    if (ix <= nx && iy <= ny)
-        T[ix+1, iy+1] -= (dTdt[ix, iy] + ( @d_xa(dQx) * _dx ) + ( @d_ya(dQy) * _dy )) * _temp
-    end
+@parallel function update_T!(T, dTdt, dQx, dQy, _dx, _dy, _temp)
+    
+    @inn(T) = @inn(T) - (@all(dTdt) +_dx * @d_xa(dQx) +_dy * @d_ya(dQy)) * _temp
     return nothing
 end
 
-@parallel_indices (ix, iy) function compute_residual_T!(r_T, dTdt, dQx, dQy, _dx, _dy)
-    nx, ny = size(r_T)
-    if (ix <= nx && iy <= ny)
-        r_T[ix, iy] += dTdt[ix, iy] + ( @d_xa(dQx) * _dx ) + ( @d_ya(dQy) * _dy )
-    end
+@parallel function compute_residual_T!(r_T, dTdt, dQx, dQy, _dx, _dy)
+
+    @all(r_T) = @all(r_T) + ( @all(dTdt) + ( @d_xa(dQx) * _dx ) + ( @d_ya(dQy) * _dy ) )
+    
     return nothing
 end
 
@@ -162,11 +157,7 @@ end
     qDx_c   = @zeros(nx, ny)
     qDy_c   = @zeros(nx, ny)
 
-
-
-    t_it_avg = 0.0
-
-
+    
         # time loop
         for it in 1:nt
 
@@ -187,11 +178,10 @@ end
 
             # iteration loop
             iter = 1; err_D = 2ϵtol; err_T = 2ϵtol
-            t_tic = 0.0; niter = 0
             while max(err_D, err_T) >= ϵtol && iter <= maxiter
 
 
-                if (iter==11) t_tic = Base.time(); niter = 0 end
+
                 # pressure
                 @parallel compute_flux!(qDx, qDy, Pf, k_ηf, _1_θ_dτ_D, αρgx, αρgy, T, _dx, _dy)
                 @parallel update_Pf!(Pf, qDx, qDy, _dx, _dy, _β_dτ_D)
@@ -223,19 +213,13 @@ end
                 end
 
                 iter += 1
-                niter += 1
-            end
 
-            t_it = (Base.time() - t_tic) / niter
-            t_it_avg += t_it
+            end
 
         end
     
 
-    A_eff = 28*nx*ny*8 / 1e9
-    T_eff = A_eff / t_it_avg
-    @printf("Time = %.3e\n", t_it_avg)
-    @printf("A_eff=%1.3f GB, T_eff=%1.3f GB/s\n", A_eff, T_eff)
+
 
     ## -------- return nothing if Run GPU -------##
 

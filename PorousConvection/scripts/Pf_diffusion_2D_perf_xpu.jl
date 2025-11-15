@@ -1,6 +1,7 @@
 const USE_GPU = false
 using ParallelStencil
 using ParallelStencil.FiniteDifferences2D
+import ParallelStencil: @reset_parallel_stencil
 @static if USE_GPU
     @init_parallel_stencil(CUDA, Float64, 2, inbounds=false)
 else
@@ -102,8 +103,7 @@ function Pf_diffusion_2D_perf_xpu(;do_viz=false)
 
     t_it = (Base.time() - t_tic) / niter
 
-    
-    A_eff = 6*nx*ny*8 / 1e9
+    A_eff = 9*nx*ny*8 / 1e9
     T_eff = A_eff / t_it
     @printf("Time = %.3e\n", t_it)
     @printf("A_eff=%1.3f GB, T_eff=%1.3f GB/s\n", A_eff, T_eff)

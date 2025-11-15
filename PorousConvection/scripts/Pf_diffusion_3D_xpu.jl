@@ -1,10 +1,12 @@
 const USE_GPU = false
 using ParallelStencil
 using ParallelStencil.FiniteDifferences3D
+import ParallelStencil: @reset_parallel_stencil
 @static if USE_GPU
     @init_parallel_stencil(CUDA, Float64, 3, inbounds=false)
 else
     @init_parallel_stencil(Threads, Float64, 3, inbounds=false)
+    @info "threads" Threads.nthreads()
 end
 using Plots, Plots.Measures, Printf
 
@@ -41,7 +43,7 @@ function Pf_diffusion_3D_xpu(;do_viz=false)
     k_ηf   = 1.0
     # numerics
 
-    nx, ny, nz  = 16*32, 16*32, 16*32
+    nx, ny, nz  = 32, 32, 32
     ϵtol    = 1e-8
     maxiter = 500 
     ncheck  = ceil(Int, 0.25max(nx, ny, nz))
@@ -95,8 +97,7 @@ function Pf_diffusion_3D_xpu(;do_viz=false)
 
     t_it = (Base.time() - t_tic) / niter
 
-    
-    A_eff = 6*nx*ny*8 / 1e9
+    A_eff = 12*nx*ny*nz * 8 / 1e9
     T_eff = A_eff / t_it
     @printf("Time = %.3e\n", t_it)
     @printf("A_eff=%1.3f GB, T_eff=%1.3f GB/s\n", A_eff, T_eff)
