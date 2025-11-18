@@ -17,6 +17,12 @@ using Plots, Plots.Measures, Printf
 @views avy(A) = 0.5 .* (A[:, 1:end-1, :] .+ A[:, 2:end, :])
 @views avz(A) = 0.5 .* (A[:, :, 1:end-1] .+ A[:, :, 2:end])
 
+function save_array(Aname,A)
+    fname = string(Aname, ".bin")
+    out = open(fname, "w"); write(out, A); close(out)
+end
+
+
 
 #----------------------------------------------------------------------------------------------------------------------------------------------#
 #-----------------------3D kernel functions: for parallelization ------------------------------------------------------------------------------#
@@ -164,7 +170,7 @@ end
     dy      = ly / ny
     dz      = lz / nz
     xc      = LinRange(-lx / 2 + dx / 2, lx / 2 - dx / 2, nx)
-    yc      = LinRange(-ly + dy / 2, - dy / 2, ny)
+    yc      = LinRange(-ly / 2 + dy / 2, ly / 2 - dy / 2, ny)
     zc      = LinRange(-lz + dz / 2, - dz / 2, nz)
 
 
@@ -276,6 +282,8 @@ end
                 png(p1, @sprintf("viz3D_out/%04d.png", iframe += 1))
             end
         end
+
+    save_array("out_T", convert.(Float32, Array(T)))
 
     return nothing
 

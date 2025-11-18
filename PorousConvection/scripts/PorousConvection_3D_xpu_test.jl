@@ -147,7 +147,7 @@ end
     dy      = ly / ny
     dz      = lz / nz
     xc      = LinRange(-lx / 2 + dx / 2, lx / 2 - dx / 2, nx)
-    yc      = LinRange(-ly + dy / 2, - dy / 2, ny)
+    yc      = LinRange(-ly / 2 + dy / 2, ly / 2 - dy / 2, ny)
     zc      = LinRange(-lz + dz / 2, - dz / 2, nz)
 
 

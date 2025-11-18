@@ -11,7 +11,7 @@ function visualise()
     ny = nz = 127
 
     T = zeros(Float32, nx, ny, nz)
-    load_array("out_Ta", T)
+    load_array("out_T", T)
 
     # Mid-plane index in y (1-based, nearest to ly/2)
     iy = (ny + 1) ÷ 2
