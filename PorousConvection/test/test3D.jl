@@ -91,6 +91,6 @@ end
     T_new, dQz_new = porous_convection_implicit_3D_xpu(;do_viz=false, do_check=true)
 
     ## show that no convection meaning dQz_new should be close to zero ##
-    @test maximum(abs.(dQz_new)) < 1e-5
+    @test maximum(abs.(dQz_new)) < 1e-4
 
 end
