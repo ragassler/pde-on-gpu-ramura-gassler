@@ -17,4 +17,8 @@ jobs:
           arch: ${{ matrix.julia-arch }}
       - uses: julia-actions/cache@v1
       - uses: julia-actions/julia-buildpkg@latest
-      - run: julia --color=yes -e 'cd("PorousConvection"); import Pkg; Pkg.activate("."); Pkg.test()'
+        with: 
+          project: "./PorousConvection"
+      - uses: julia-actions/julia-runtest@latest
+        with: 
+          project: "./PorousConvection"
