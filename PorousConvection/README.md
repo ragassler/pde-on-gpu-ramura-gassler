@@ -2,7 +2,7 @@
 
 [![Build Status](https://github.com/ragassler/pde-on-gpu-ramura-gassler/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/ragassler/pde-on-gpu-ramura-gassler/actions/workflows/CI.yml?query=branch%3Amain)
 
-[![CI action](https://github.com/flow-01/pde-on-gpu-ramura-gassler/actions/workflows/CI.yml/badge.svg)](https://github.com/flow-01/pde-on-gpu-ramura-gassler/actions/workflows/CI.yml)
+[![CI action](https://github.com/flow-01/pde-on-gpu-ramura-gassler/actions/workflows/CI.yml/badge.svg)](https://github.com/ragassler/pde-on-gpu-ramura-gassler/actions/workflows/CI.yml)
 
 A collection of 2D/3D porous convection solvers written in Julia, with CPU/GPU backends via [ParallelStencil.jl]. Includes scripts for running simulations, visualization helpers, and a test suite with unit and reference tests.
 
