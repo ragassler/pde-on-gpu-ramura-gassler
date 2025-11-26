@@ -1,0 +1,7 @@
+
+Running diffusion_2D with np = 1
+Global grid: 16384x16384x1 (nprocs: 1, dims: 1x1x1; device support: CUDA-aware)
+Time = 1.958 sec, T_eff = 2170.00 GB/s (niter = 990)
+ -> T_eff(1) = 2172.142 GB/s
+
+Benchmark data saved to benchmark_weak_1_gpu.mat

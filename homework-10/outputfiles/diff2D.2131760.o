@@ -1,0 +1,97 @@
+
+Running diffusion_2D with np = 4
+
+Running diffusion_2D with np = 4
+
+Running diffusion_2D with np = 4
+
+Running diffusion_2D with np = 4
+
+Running diffusion_2D with np = 4
+
+Running diffusion_2D with np = 4
+
+Running diffusion_2D with np = 4
+
+Running diffusion_2D with np = 4
+
+Running diffusion_2D with np = 4
+
+Running diffusion_2D with np = 4
+
+Running diffusion_2D with np = 4
+
+Running diffusion_2D with np = 4
+
+Running diffusion_2D with np = 4
+
+Running diffusion_2D with np = 4
+
+Running diffusion_2D with np = 4
+
+Running diffusion_2D with np = 4
+Global grid: 65530x65530x1 (nprocs: 16, dims: 4x4x1; device support: CUDA-aware)
+Time = 2.062 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.060 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.063 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.063 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.065 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.062 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.062 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.065 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.065 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.061 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.062 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.063 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.062 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.063 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.065 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.062 sec, T_eff = 2060.00 GB/s (niter = 990)
+ -> T_eff(4) = 2059.422 GB/s
+ -> T_eff(4) = 2061.964 GB/s
+ -> T_eff(4) = 2058.830 GB/s
+ -> T_eff(4) = 2060.616 GB/s
+ -> T_eff(4) = 2059.465 GB/s
+ -> T_eff(4) = 2063.376 GB/s
+ -> T_eff(4) = 2061.633 GB/s
+ -> T_eff(4) = 2059.477 GB/s
+ -> T_eff(4) = 2062.497 GB/s
+ -> T_eff(4) = 2060.971 GB/s
+ -> T_eff(4) = 2060.682 GB/s
+ -> T_eff(4) = 2060.617 GB/s
+ -> T_eff(4) = 2062.041 GB/s
+ -> T_eff(4) = 2063.819 GB/s
+ -> T_eff(4) = 2062.118 GB/s
+ -> T_eff(4) = 2061.961 GB/s
+
+Benchmark data saved to benchmark_weak_4_gpu.mat
+
+Benchmark data saved to benchmark_weak_4_gpu.mat
+
+Benchmark data saved to benchmark_weak_4_gpu.mat
+
+Benchmark data saved to benchmark_weak_4_gpu.mat
+
+Benchmark data saved to benchmark_weak_4_gpu.mat
+
+Benchmark data saved to benchmark_weak_4_gpu.mat
+
+Benchmark data saved to benchmark_weak_4_gpu.mat
+
+Benchmark data saved to benchmark_weak_4_gpu.mat
+
+Benchmark data saved to benchmark_weak_4_gpu.mat
+
+Benchmark data saved to benchmark_weak_4_gpu.mat
+
+Benchmark data saved to benchmark_weak_4_gpu.mat
+
+Benchmark data saved to benchmark_weak_4_gpu.mat
+
+Benchmark data saved to benchmark_weak_4_gpu.mat
+
+Benchmark data saved to benchmark_weak_4_gpu.mat
+
+Benchmark data saved to benchmark_weak_4_gpu.mat
+
+Benchmark data saved to benchmark_weak_4_gpu.mat

@@ -1,0 +1,385 @@
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+
+Running diffusion_2D with np = 64
+Global grid: 131058x131058x1 (nprocs: 64, dims: 8x8x1; device support: CUDA-aware)
+Time = 2.067 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.069 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.073 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.072 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.071 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.073 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.068 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.069 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.069 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.071 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.072 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.068 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.066 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.074 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.069 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.072 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.073 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.071 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.068 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.069 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.071 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.071 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.069 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.066 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.071 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.068 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.071 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.075 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.072 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.069 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.071 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.069 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.069 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.072 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.071 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.069 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.067 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.071 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.068 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.072 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.072 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.069 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.068 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.071 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.072 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.071 sec, T_eff = 2050.00 GB/s (niter = 990)
+ -> T_eff(64) = 2055.380 GB/s
+ -> T_eff(64) = 2056.430 GB/s
+ -> T_eff(64) = 2056.018 GB/s
+ -> T_eff(64) = 2057.908 GB/s
+ -> T_eff(64) = 2054.172 GB/s
+ -> T_eff(64) = 2053.685 GB/s
+ -> T_eff(64) = 2054.267 GB/s
+ -> T_eff(64) = 2053.675 GB/s
+ -> T_eff(64) = 2050.714 GB/s
+ -> T_eff(64) = 2051.745 GB/s
+ -> T_eff(64) = 2051.108 GB/s
+ -> T_eff(64) = 2054.496 GB/s
+ -> T_eff(64) = 2054.167 GB/s
+ -> T_eff(64) = 2057.949 GB/s
+ -> T_eff(64) = 2051.738 GB/s
+ -> T_eff(64) = 2052.335 GB/s
+ -> T_eff(64) = 2053.080 GB/s
+ -> T_eff(64) = 2054.077 GB/s
+ -> T_eff(64) = 2054.216 GB/s
+ -> T_eff(64) = 2050.522 GB/s
+ -> T_eff(64) = 2051.920 GB/s
+ -> T_eff(64) = 2053.812 GB/s
+ -> T_eff(64) = 2053.443 GB/s
+ -> T_eff(64) = 2055.097 GB/s
+ -> T_eff(64) = 2053.455 GB/s
+ -> T_eff(64) = 2057.173 GB/s
+ -> T_eff(64) = 2056.593 GB/s
+ -> T_eff(64) = 2057.395 GB/s
+ -> T_eff(64) = 2054.162 GB/s
+ -> T_eff(64) = 2052.854 GB/s
+ -> T_eff(64) = 2056.170 GB/s
+ -> T_eff(64) = 2055.411 GB/s
+ -> T_eff(64) = 2055.337 GB/s
+ -> T_eff(64) = 2056.079 GB/s
+ -> T_eff(64) = 2054.119 GB/s
+ -> T_eff(64) = 2053.911 GB/s
+ -> T_eff(64) = 2051.804 GB/s
+ -> T_eff(64) = 2053.035 GB/s
+ -> T_eff(64) = 2053.854 GB/s
+ -> T_eff(64) = 2053.082 GB/s
+ -> T_eff(64) = 2054.745 GB/s
+ -> T_eff(64) = 2053.524 GB/s
+ -> T_eff(64) = 2055.420 GB/s
+ -> T_eff(64) = 2055.952 GB/s
+ -> T_eff(64) = 2051.912 GB/s
+ -> T_eff(64) = 2055.277 GB/s
+ -> T_eff(64) = 2055.014 GB/s
+ -> T_eff(64) = 2054.555 GB/s
+ -> T_eff(64) = 2054.687 GB/s
+ -> T_eff(64) = 2048.885 GB/s
+ -> T_eff(64) = 2053.705 GB/s
+ -> T_eff(64) = 2054.194 GB/s
+ -> T_eff(64) = 2052.552 GB/s
+ -> T_eff(64) = 2053.359 GB/s
+ -> T_eff(64) = 2054.444 GB/s
+ -> T_eff(64) = 2052.857 GB/s
+ -> T_eff(64) = 2054.789 GB/s
+ -> T_eff(64) = 2052.270 GB/s
+ -> T_eff(64) = 2054.758 GB/s
+ -> T_eff(64) = 2050.804 GB/s
+ -> T_eff(64) = 2053.728 GB/s
+ -> T_eff(64) = 2053.533 GB/s
+ -> T_eff(64) = 2052.879 GB/s
+ -> T_eff(64) = 2053.004 GB/s
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat
+
+Benchmark data saved to benchmark_weak_64_gpu.mat

@@ -1,0 +1,53 @@
+=== Strong scaling benchmark (single GPU) ===
+
+[1/10] Running diffusion_2D with nx = ny = 32
+Global grid: 32x32x1 (nprocs: 1, dims: 1x1x1; device support: CUDA-aware)
+Time = 0.002 sec, T_eff = 0.23 GB/s (niter = 32)
+ -> T_eff(32) = 0.234 GB/s
+
+[2/10] Running diffusion_2D with nx = ny = 64
+Global grid: 64x64x1 (nprocs: 1, dims: 1x1x1; device support: CUDA-aware)
+Time = 0.011 sec, T_eff = 0.95 GB/s (niter = 158)
+ -> T_eff(64) = 0.954 GB/s
+
+[3/10] Running diffusion_2D with nx = ny = 128
+Global grid: 128x128x1 (nprocs: 1, dims: 1x1x1; device support: CUDA-aware)
+Time = 0.042 sec, T_eff = 4.11 GB/s (niter = 662)
+ -> T_eff(128) = 4.111 GB/s
+
+[4/10] Running diffusion_2D with nx = ny = 256
+Global grid: 256x256x1 (nprocs: 1, dims: 1x1x1; device support: CUDA-aware)
+Time = 0.171 sec, T_eff = 16.40 GB/s (niter = 2677)
+ -> T_eff(256) = 16.385 GB/s
+
+[5/10] Running diffusion_2D with nx = ny = 512
+Global grid: 512x512x1 (nprocs: 1, dims: 1x1x1; device support: CUDA-aware)
+Time = 0.631 sec, T_eff = 66.40 GB/s (niter = 9990)
+ -> T_eff(512) = 66.374 GB/s
+
+[6/10] Running diffusion_2D with nx = ny = 1024
+Global grid: 1024x1024x1 (nprocs: 1, dims: 1x1x1; device support: CUDA-aware)
+Time = 0.631 sec, T_eff = 266.00 GB/s (niter = 9990)
+ -> T_eff(1024) = 265.709 GB/s
+
+[7/10] Running diffusion_2D with nx = ny = 2048
+Global grid: 2048x2048x1 (nprocs: 1, dims: 1x1x1; device support: CUDA-aware)
+Time = 0.815 sec, T_eff = 823.00 GB/s (niter = 9990)
+ -> T_eff(2048) = 822.517 GB/s
+
+[8/10] Running diffusion_2D with nx = ny = 4096
+Global grid: 4096x4096x1 (nprocs: 1, dims: 1x1x1; device support: CUDA-aware)
+Time = 1.639 sec, T_eff = 1640.00 GB/s (niter = 9990)
+ -> T_eff(4096) = 1636.488 GB/s
+
+[9/10] Running diffusion_2D with nx = ny = 8192
+Global grid: 8192x8192x1 (nprocs: 1, dims: 1x1x1; device support: CUDA-aware)
+Time = 5.222 sec, T_eff = 2050.00 GB/s (niter = 9990)
+ -> T_eff(8192) = 2054.087 GB/s
+
+[10/10] Running diffusion_2D with nx = ny = 16384
+Global grid: 16384x16384x1 (nprocs: 1, dims: 1x1x1; device support: CUDA-aware)
+Time = 20.003 sec, T_eff = 2150.00 GB/s (niter = 9990)
+ -> T_eff(16384) = 2145.053 GB/s
+
+Benchmark data saved to benchmark_strong_single_gpu.mat
