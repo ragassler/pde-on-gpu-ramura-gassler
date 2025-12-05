@@ -50,32 +50,28 @@ To reduce clutter, we work with:
 The *dimensional* governing equations are:
 
 - **Darcy’s law (momentum in porous medium)**  
-  \[
-    \mathbf{q}_D = -\frac{k}{\eta}
-    \left(\nabla p - \rho_0 \alpha g\, T \, \mathbf{e}_z\right)
-  \]
-  where \(k\) is permeability, \(\eta\) viscosity, \(\alpha\) thermal expansivity, and \(g\) gravity.
+  $$\mathbf{q}_D = -\frac{k}{\eta}
+    \left(\nabla p - \rho_0 \alpha g\, T \, \mathbf{e}_z\right)$$
+  \
+  where $k$ is permeability, $\eta$ viscosity, $\alpha$ thermal expansivity, and $g$ gravity.
 
 - **Mass conservation (incompressible flow)**  
-  \[
-    \nabla \cdot \mathbf{q}_D = 0
-  \]
+  $$\nabla \cdot \mathbf{q}_D = 0$$
 
 - **Heat diffusion flux**  
-  \[
-    \mathbf{q}_T = -\frac{\lambda}{\rho_0 c_p} \nabla T
-  \]
-  with \(\lambda\) thermal conductivity and \(\rho_0 c_p\) volumetric heat capacity.
+  $$\mathbf{q}_T = -\frac{\lambda}{\rho_0 c_p} \nabla T$$
+  \
+  with $\lambda$ thermal conductivity and $\rho_0 c_p$ volumetric heat capacity.
 
 - **Energy equation in porous medium**  
-  \[
-    \frac{\partial T}{\partial t}
+  $$\frac{\partial T}{\partial t}
     + \frac{1}{\phi} \, \mathbf{q}_D \cdot \nabla T
-    + \nabla \cdot \mathbf{q}_T = 0,
-  \]
-  where \(\phi\) is porosity.
+    + \nabla \cdot \mathbf{q}_T = 0,$$
+  \
+  
+  where $\phi$ is porosity.
 
-In dimensionless form, these equations collapse into a system governed mainly by the **Rayleigh number** \(Ra\), which controls the onset and intensity of convection. The 3D solver in this project integrates this system to steady state, starting from a localized thermal perturbation in the middle of the domain. At sufficiently high \(Ra\), this perturbation grows into rising hot plumes and sinking cold downwellings.
+In dimensionless form, these equations collapse into a system governed mainly by the **Rayleigh number** $Ra$, which controls the onset and intensity of convection. The 3D solver in this project integrates this system to steady state, starting from a localized thermal perturbation in the middle of the domain. At sufficiently high $Ra$, this perturbation grows into rising hot plumes and sinking cold downwellings.
 
 ## Numerical method and parallelisation
 
@@ -85,16 +81,16 @@ The steady-state porous convection system is elliptic–parabolic and nonlinearl
 To solve it efficiently, we use a **pseudo-transient method**:
 
 1. Add pseudo-time derivatives to the **Darcy fluxes** and **temperature fluxes**:
-   - \(\theta_D \, \partial_\tau \mathbf{q}_D + \mathbf{q}_D = \text{Darcy RHS}\)
-   - \(\theta_T \, \partial_\tau \mathbf{q}_T + \mathbf{q}_T = \text{diffusion RHS}\)
+   - $\theta_D \, \partial_\tau \mathbf{q}_D + \mathbf{q}_D = \text{Darcy RHS}$
+   - $\theta_T \, \partial_\tau \mathbf{q}_T + \mathbf{q}_T = \text{diffusion RHS}$
 
 2. Add a pseudo-compressibility term to the **pressure equation**:
-   - \(\beta \, \partial_\tau p + \nabla \cdot \mathbf{q}_D = 0\)
+   - $\beta \, \partial_\tau p + \nabla \cdot \mathbf{q}_D = 0$
 
 3. Combine **physical** and **pseudo** time derivatives in the temperature equation:
-   - \(\partial_\tau T + \frac{T - T_{\text{old}}}{\Delta t} + \frac{1}{\phi}\,\mathbf{q}_D\cdot\nabla T + \nabla\cdot\mathbf{q}_T = 0\)
+   - $\partial_\tau T + \frac{T - T_{\text{old}}}{\Delta t} + \frac{1}{\phi}\,\mathbf{q}_D\cdot\nabla T + \nabla\cdot\mathbf{q}_T = 0$
 
-For each physical time step \(\Delta t\), we iterate in pseudo-time \(\tau\) until the residuals of the pressure and temperature equations fall below a tolerance. This formulation is:
+For each physical time step $\Delta t$, we iterate in pseudo-time $\tau$ until the residuals of the pressure and temperature equations fall below a tolerance. This formulation is:
 
 - **robust** for stiff coupled systems,
 - very **friendly to parallelisation**, since each pseudo-time iteration is composed of local finite-difference stencils.
@@ -104,7 +100,7 @@ For each physical time step \(\Delta t\), we iterate in pseudo-time \(\tau\) unt
 The solver uses **finite differences (FD)** on a **staggered 3D grid**:
 
 - Pressure and temperature are stored at **cell centres**.
-- Darcy fluxes \(q_D\) and temperature fluxes \(q_T\) live on **cell faces**.
+- Darcy fluxes $q_D$ and temperature fluxes $q_T$ live on **cell faces**.
 - Divergences and gradients are implemented via `ParallelStencil.FiniteDifferences3D` operators (`@d_xa`, `@d_ya`, `@d_za`).
 
 Advection in the temperature equation uses an **upwind scheme** based on the sign of the fluxes, implemented explicitly in the kernel.
