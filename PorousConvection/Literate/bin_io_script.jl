@@ -1,7 +1,4 @@
 ## Save and load binary files for arrays
-# 
-
-
 using Plots
 
 """
