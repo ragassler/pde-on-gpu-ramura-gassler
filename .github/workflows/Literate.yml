@@ -1,0 +1,22 @@
+name: Run Literate.jl
+# adapted from https://lannonbr.com/blog/2019-12-09-git-commit-in-actions
+
+on: [push, pull_request]
+
+jobs:
+  lit:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the branch
+      - uses: actions/checkout@v4
+
+      - uses: julia-actions/setup-julia@latest
+        with:
+          version: '1.12'
+          arch: x64
+
+      - uses: julia-actions/cache@v1
+      - uses: julia-actions/julia-buildpkg@latest
+
+      - name: run Literate
+        run: QT_QPA_PLATFORM=offscreen julia --color=yes --project -e 'cd("scripts"); include("literate_script.jl")'
