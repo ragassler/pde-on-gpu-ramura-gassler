@@ -1,19 +1,26 @@
 """
-Julia script to solve 3D porous convection in a Parallelized manner. Parallelization: XPU support (CPU/GPU) via ParallelStencil.jl.
+Julia script to solve 3D porous convection using implicit time integration with multi-XPU support (CPU/GPU) via ParallelStencil.jl and ImplicitGlobalGrid.jl.
 
-It runs on a single CPU or GPU.
+It can be run on multiple devices (CPUs/GPUs) to distribute the computational load.
 Adjust USE_GPU constant to switch between CPU and GPU execution. (For CPU execution ensure low resolution)
 
 On Daint supercomputer use sbatch script provided in the repository to run on multiple GPUs.
 
-Example of a local run on CPU:
-    julia -t 4 --project=scripts scripts/PorousConvection_3D_xpu.jl 
-
 """
 
+##---------------------------------------------------------------------------------------------------------------------------------------------##
+##-------------------------------------------------- GPU/CPU SELECTION ------------------------------------------------------------------------##
 const USE_GPU = false
+
+##---------------------------------------------------------------------------------------------------------------------------------------------##
+
+
+##-------------------------------------------------- IMPORTS AND INITIALIZATIONS --------------------------------------------------------------##
+
 using ParallelStencil
 using ParallelStencil.FiniteDifferences3D
+using ImplicitGlobalGrid
+import MPI
 @static if USE_GPU
     @init_parallel_stencil(CUDA, Float64, 3, inbounds=true)
     CUDA.allowscalar(false)  # catches accidental CPU-style indexing on CuArrays
@@ -24,7 +31,11 @@ end
 
 using Plots, Plots.Measures, Printf
 
+##---------------------------------------------------------------------------------------------------------------------------------------------##
 
+# utility functions
+
+max_g(A) = (max_l = maximum(A); MPI.Allreduce(max_l, MPI.MAX, MPI.COMM_WORLD))
 
 @views avx(A) = 0.5 .* (A[1:end-1, :, :] .+ A[2:end, :, :])
 @views avy(A) = 0.5 .* (A[:, 1:end-1, :] .+ A[:, 2:end, :])
@@ -36,6 +47,10 @@ function save_array(Aname,A)
 end
 
 
+
+#----------------------------------------------------------------------------------------------------------------------------------------------#
+#-----------------------3D kernel functions: for parallelization ------------------------------------------------------------------------------#
+#----------------------------------------------------------------------------------------------------------------------------------------------#
 
 
 """
@@ -65,7 +80,6 @@ Notes
 end
 
 
-
 """
 Implicit pressure update for `Pf` using flux divergence.
 
@@ -85,6 +99,7 @@ Returns
 end
 
 
+
 """
 Compute residual of the pressure conservation equation.
 
@@ -94,7 +109,7 @@ Arguments
 - _dx,_dy,_dz  : inverse grid spacings
 
 Typical usage
-- After call, use `maximum(abs.(r_Pf))` as convergence measure.
+- After call, use `max_g(abs.(r_Pf))` as convergence measure.
 
 Returns
 - nothing
@@ -211,7 +226,7 @@ Arguments
 - _dx,_dy,_dz  : inverse grid spacings
 
 Typical usage
-- After call, use `maximum(abs.(r_T))` as convergence measure.
+- After call, use `max_g(abs.(r_T))` as convergence measure.
 
 Returns
 - nothing
@@ -223,7 +238,6 @@ Returns
     end
     return nothing
 end
-
 
 """
 Boundary conditions for adiabatic side walls and Dirichlet top/bottom for T.
@@ -258,15 +272,20 @@ end
 end
 
 
+##---------------------------------------------------------------------------------------------------------------------------------------------##
+##-------------------------------------------------- POROUS CONVECTION 3D IMPLICIT SOLVER FUNCTION --------------------------------------------##
+
 """
-Main function to run the 3D porous convection simulation solving thermal porous convection using the pseudo-transient method and Parallelization via ParallelStencil.jl.
+Main function to run the 3D porous convection simulation solving thermal porous convection using the pseudo-transient method and multi-XPU support.
 do_viz   : boolean flag to enable/disable visualization and data saving disable for performance measurements
 do_check : boolean flag to enable/disable convergence checking
 
 It initalizes the physical and numerical parameters, sets up the computational grid, and runs the time-stepping loop.
 Modify the simulation parameters (nx, ny, nz, nt, etc.) in the function as needed.
 
-Uses the Parallel kernel functions defined above, it computes the Darcy fluxes, updates the pressure and temperature fields, and optionally performs convergence checks.
+The computational grid is distributed across multiple devices (CPUs/GPUs) using ParallelStencil.jl and ImplicitGlobalGrid.jl.
+With the kernel functions defined above, it computes the Darcy fluxes, updates the pressure and temperature fields, and optionally performs convergence checks.
+
 If visualization is enabled, it saves temperature field snapshots at specified intervals for later visualization.
 
 Example:
@@ -279,7 +298,8 @@ Output:
 
 returns nothing
 """
-@views function porous_convection_implicit_3D_xpu(;do_viz=false, do_check=false)
+
+@views function porous_convection_implicit_3D_multixpu(;do_viz=false, do_check=false)
     # physics
     lx, ly, lz = 40.0, 20.0, 20.0
     k_ηf       = 1.0
@@ -294,24 +314,30 @@ returns nothing
 
     ## -------------------------------------------------------------------------------------------##
     ## ------------------ SIMULATION PARAMETERS choose wisely nx, ny, nz and nt ------------------##
-    nx, ny, nz = 255, 127, 127
-    nt         = 2000
+
+   
+    nz          = 63
+    nx,ny       = 2 * (nz + 1) - 1, nz
+    me, dims    = init_global_grid(nx, ny, nz, select_device=false)  # init global grid and more
+    b_width     = (8, 8, 4)      
+    
+    nt         = 500
     re_D       = 4π
     cfl        = 1.0 / sqrt(3.1)
-    maxiter    = 10max(nx, ny)
+    maxiter    = 10max(nx_g(), ny_g())
     ϵtol       = 1e-6
     nvis       = 50
-    ncheck     = ceil(2max(nx, ny, nz))
+    ncheck     = ceil(2max(nx_g(), ny_g(), nz_g()))
     ## -------------------------------------------------------------------------------------------##
 
         
     # derived numerics
-    dx      = lx / nx
-    dy      = ly / ny
-    dz      = lz / nz
-    xc      = LinRange(-lx / 2 + dx / 2, lx / 2 - dx / 2, nx)
-    yc      = LinRange(-ly / 2 + dy / 2, ly / 2 - dy / 2, ny)
-    zc      = LinRange(-lz + dz / 2, - dz / 2, nz)
+    dx      = lx / nx_g()
+    dy      = ly / ny_g()
+    dz      = lz / nz_g()
+    xc      = LinRange(-lx / 2 + dx / 2, lx / 2 - dx / 2, nx_g())
+    yc      = LinRange(-ly / 2 + dy / 2, ly / 2 - dy / 2, ny_g())
+    zc      = LinRange(-lz + dz / 2, - dz / 2, nz_g())
 
 
     # pressure PT
@@ -326,12 +352,14 @@ returns nothing
 
     # array initialisation
     # temperature
-    T        = [ΔT * exp(-xc[ix]^2 - yc[iy]^2 - (zc[iz] + lz / 2)^2) for ix = 1:nx, iy = 1:ny, iz = 1:nz]
-    T        = Data.Array(T)
-    @parallel (1:size(T, 1), 1:size(T, 2)) bc_z_T_dirichlet!(T, ΔT / 2, -ΔT / 2)
-    @parallel (1:size(T, 2), 1:size(T, 3)) bc_x!(T)
-    @parallel (1:size(T, 1), 1:size(T, 3)) bc_y!(T)
-    T_old    = Data.Array(copy(Array(T)))
+    T  = @zeros(nx, ny, nz)
+    T .= Data.Array([ΔT * exp(-(x_g(ix, dx, T) + dx / 2 - lx / 2)^2
+                            -(y_g(iy, dy, T) + dy / 2 - ly / 2)^2
+                            -(z_g(iz, dz, T) + dz / 2 - lz / 2)^2) for ix = 1:size(T, 1), iy = 1:size(T, 2), iz = 1:size(T, 3)])
+    T[:, :, 1  ] .=  ΔT / 2
+    T[:, :, end] .= -ΔT / 2
+    update_halo!(T)
+    T_old = copy(T)
     dTdt     = @zeros(nx - 2, ny - 2, nz - 2)
     r_T      = @zeros(nx - 2, ny - 2, nz - 2)
     qTx      = @zeros(nx - 1, ny - 2, nz - 2)
@@ -348,86 +376,111 @@ returns nothing
     qDy_c   = @zeros(nx, ny, nz)
     qDz_c   = @zeros(nx, ny, nz)
 
+    # visualisation setup on rank 0
+    if do_viz
+        ENV["GKSwstype"]="nul"
+        if (me==0) if isdir("viz3Dmpi_out")==false mkdir("viz3Dmpi_out") end; loadpath="viz3Dmpi_out/"; anim=Animation(loadpath,String[]); println("Animation directory: $(anim.dir)") end
+        nx_v, ny_v, nz_v = (nx - 2) * dims[1], (ny - 2) * dims[2], (nz - 2) * dims[3]
+        (nx_v * ny_v * nz_v * sizeof(Data.Number) > 0.8 * Sys.free_memory()) && error("Not enough memory for visualization.")
+        T_v   = zeros(nx_v, ny_v, nz_v) # global array for visu
+        T_inn = zeros(nx - 2, ny - 2, nz - 2) # no halo local array for visu
+        xi_g, zi_g = LinRange(-lx / 2 + dx + dx / 2, lx / 2 - dx - dx / 2, nx_v), LinRange(-lz + dz + dz / 2, -dz - dz / 2, nz_v) # inner points only
+        iframe = 0
+    end
 
-    iframe = 0
+    # time loop
+    for it in 1:nt
 
 
-        # time loop
-        for it in 1:nt
-
-            
-
-            # print progress
-            if it % 50 == 0
-                @printf("Time step %d / %d (%.1f%%)\n", it, nt, it / nt * 100)
-            end
+        # print progress only on rank 0
+        if (it % 50 == 0) && (me==0)
+            @printf("Time step %d / %d (%.1f%%)\n", it, nt, it / nt * 100)
+        end
 
 
-            T_old .= T
+        T_old .= T
 
-            dt = if it == 1
-                0.1 * min(dx, dy, dz) / (αρg * ΔT * k_ηf)
-            else
-                min(5.0 * min(dx, dy, dz) / (αρg * ΔT * k_ηf), ϕ * min(dx / maximum(abs.(qDx)), dy / maximum(abs.(qDy)), dz / maximum(abs.(qDz))) / 3.1)
-            end
-            _dt = 1.0/dt
-            re_T    = π + sqrt(π^2 + ly^2 / λ_ρCp / dt)
-            θ_dτ_T  = max(lx, ly, lz) / re_T / cfl / min(dx, dy, dz)
-            _1_θ_dτ_T = 1.0 / (1.0 + θ_dτ_T)
-            β_dτ_T  = (re_T * λ_ρCp) / (cfl * min(dx, dy, dz) * max(lx, ly, lz))
-            _tmp    = 1.0/(_dt + β_dτ_T)
+        dt = if it == 1
+            0.1 * min(dx, dy, dz) / (αρg * ΔT * k_ηf)
+        else
+            # use max_g
+            min(5.0 * min(dx, dy, dz) / (αρg * ΔT * k_ηf), ϕ * min(dx / max_g(abs.(qDx)), dy / max_g(abs.(qDy)), dz / max_g(abs.(qDz))) / 3.1)
+        end
+        _dt = 1.0/dt
+        re_T    = π + sqrt(π^2 + ly^2 / λ_ρCp / dt)
+        θ_dτ_T  = max(lx, ly, lz) / re_T / cfl / min(dx, dy, dz)
+        _1_θ_dτ_T = 1.0 / (1.0 + θ_dτ_T)
+        β_dτ_T  = (re_T * λ_ρCp) / (cfl * min(dx, dy, dz) * max(lx, ly, lz))
+        _tmp    = 1.0/(_dt + β_dτ_T)
 
-            # iteration loop
-            iter = 1; err_D = 2ϵtol; err_T = 2ϵtol
-            while max(err_D, err_T) >= ϵtol && iter <= maxiter
+        # iteration loop
+        iter = 1; err_D = 2ϵtol; err_T = 2ϵtol
+        while max(err_D, err_T) >= ϵtol && iter <= maxiter
 
-                # pressure
+            # pressure
+            @hide_communication b_width begin
                 @parallel compute_flux!(qDx, qDy, qDz, Pf, k_ηf, _1_θ_dτ_D, αρg, T, _dx, _dy, _dz)
-                @parallel update_Pf!(Pf, qDx, qDy, qDz, _dx, _dy, _dz, _β_dτ_D)
+                update_halo!(qDx, qDy, qDz)
+            end
 
-                
-                # temperature
+            @parallel update_Pf!(Pf, qDx, qDy, qDz, _dx, _dy, _dz, _β_dτ_D)
 
-                @parallel compute_temp_flux!(qTx, qTy, qTz, T, λ_ρCp, _1_θ_dτ_T, _dx, _dy, _dz)
-                @parallel compute_dTdt!(dTdt, T, T_old, _dt, qDx, qDy, qDz, _ϕ, _dx, _dy, _dz)   
+            # temperature
+
+            @parallel compute_temp_flux!(qTx, qTy, qTz, T, λ_ρCp, _1_θ_dτ_T, _dx, _dy, _dz)
+            @parallel compute_dTdt!(dTdt, T, T_old, _dt, qDx, qDy, qDz, _ϕ, _dx, _dy, _dz)
+            
+            @hide_communication b_width begin
                 @parallel update_T!(T, dTdt, qTx, qTy, qTz, _dx, _dy, _dz, _tmp)
 
                 # boundary conditions adiabatic
                 @parallel (1:size(T, 2), 1:size(T, 3)) bc_x!(T)
                 @parallel (1:size(T, 1), 1:size(T, 3)) bc_y!(T)
+                update_halo!(T)
+            end
 
-                if do_check
-                    if iter % ncheck == 0
-                        fill!(r_T, 0.0)
-                        fill!(r_Pf, 0.0)
-                        @parallel compute_residual_T!(r_T, dTdt, qTx, qTy, qTz, _dx, _dy, _dz)
-                        @parallel compute_residual!(r_Pf, qDx, qDy, qDz, _dx, _dy, _dz)
 
-                        err_T = maximum(abs.(r_T))
-                        err_D = maximum(abs.(r_Pf))
-                        if do_viz && USE_GPU==false
-                            @printf("it = %d,  iter/nx=%.1f, err_D=%1.3e, err_T=%1.3e\n", it, iter / nx, err_D, err_T)
-                        end
+            if do_check
+                if iter % ncheck == 0
+                    fill!(r_T, 0.0)
+                    fill!(r_Pf, 0.0)
+                    @parallel compute_residual_T!(r_T, dTdt, qTx, qTy, qTz, _dx, _dy, _dz)
+                    @parallel compute_residual!(r_Pf, qDx, qDy, qDz, _dx, _dy, _dz)
 
+                    err_T = max_g(abs.(r_T))
+                    err_D = max_g(abs.(r_Pf))
+                    if do_viz && USE_GPU==false
+                        @printf("it = %d,  iter/nx=%.1f, err_D=%1.3e, err_T=%1.3e\n", it, iter / nx, err_D, err_T)
                     end
+
                 end
-
-                iter += 1
             end
 
-            
-            # visualisation
-            if do_viz && (it % nvis == 0)
-                p1 = heatmap(xc, zc, Array(T)[:, ceil(Int, ny / 2), :]'; xlims=(xc[1], xc[end]), ylims=(zc[1], zc[end]), aspect_ratio=1, c=:turbo)
-                png(p1, @sprintf("viz3D_out/%04d.png", iframe += 1))
-            end
+            iter += 1
         end
 
-    save_array("out_T", convert.(Float32, Array(T)))
+        
+        # visualisation
+        if do_viz && (it % nvis == 0)
+            T_inn .= Array(T)[2:end-1, 2:end-1, 2:end-1]; gather!(T_inn, T_v)
+            if me == 0
+                p1 = heatmap(xi_g, zi_g, T_v[:, ceil(Int, ny_g() / 2), :]'; xlims=(xi_g[1], xi_g[end]), ylims=(zi_g[1], zi_g[end]), aspect_ratio=1, c=:turbo)
+                # display(p1)
+                png(p1, @sprintf("viz3Dmpi_out/%04d.png", iframe += 1))
+                save_array(@sprintf("viz3Dmpi_out/out_T_%04d", iframe), convert.(Float32, T_v))
+            end
+        end
+    end
 
+    finalize_global_grid()
     return nothing
 
-    end
+end
+
+##---------------------------------------------------------------------------------------------------------------------------------------------##
+
+##-------------------------------------------------- Run Simulation ---------------------------------------------------------------------------##
+# porous_convection_implicit_3D_multixpu(do_viz=true, do_check=true)
 
 
 
