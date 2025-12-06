@@ -2,20 +2,24 @@
 
 [![CI action](https://github.com/ragassler/pde-on-gpu-ramura-gassler/actions/workflows/CI.yml/badge.svg)](https://github.com/ragassler/pde-on-gpu-ramura-gassler/actions/workflows/CI.yml)  [![Literate action](https://github.com/ragassler/pde-on-gpu-ramura-gassler/actions/workflows/Literate.yml/badge.svg)](https://github.com/ragassler/pde-on-gpu-ramura-gassler/actions/workflows/Literate.yml)
 
+**Project info**
 
-A collection of 2D/3D porous convection solvers written in Julia, with CPU/GPU backends via [ParallelStencil.jl, ImplicitGlobalGrid]. Includes scripts for running simulations, visualization helpers, and a test suite with unit and reference tests.
+This repository is the final project for the course *Solving partial differential equations in parallel on GPUs I* at ETH Zürich (Fall 2025).  
+Author: Ramura Gassler (`rgassler@student.ethz.ch`).
+
+Its a collection of 2D/3D porous convection solvers written in Julia, with CPU/GPU backends via [`ParallelStencil.jl`, `ImplicitGlobalGrid.jl`]. Includes scripts for running simulations, visualization helpers, and a test suite with unit and reference tests.
 
 ## Contents
 
 - [Introduction](#introduction)
 - [Physical model](#physical-model)
 - [Numerical method and parallelisation](#numerical-method-and-parallelisation)
-- [Setup](#setup)
-- [Run the simulations](#run-the-simulations)
-- [Repository structure](#-repository-structure)
+- [Setup](#wrench-setup)
+- [Run the simulations](#rocket-run-the-simulations)
+- [Repository structure](#package-repository-structure)
 - [2D Porous Convection (XPU)](#2d-porous-convection-xpu)
 - [3D Porous Convection (XPU)](#3d-porous-convection-xpu)
-- [Unit and reference testing](#unit-and-reference-testing)
+- [Unit and reference testing](#white_check_mark-unit-and-reference-testing)
 - [3D MPI porous convection (XPU)](#porous-convection-3d-mpi)
 - [Automatic documentation in Julia](#automatic-documentation-in-julia)
 
@@ -65,7 +69,6 @@ The governing equations are:
   \
   where $\phi$ is porosity.
 
-In dimensionless form, these equations collapse into a system governed mainly by the **Rayleigh number** $Ra$, which controls the onset and intensity of convection. The 3D solver in this project integrates this system to steady state, starting from a localized thermal perturbation in the middle of the domain. At sufficiently high $Ra$, this perturbation grows into rising hot plumes and sinking cold downwellings.
 
 ## Numerical method and parallelisation
 
@@ -124,14 +127,14 @@ In the multi-GPU variant `(PorousConvection_3D_multixpu.jl)`, we additionally us
 
 The pseudo-transient method is particularly well-suited for this setup: each pseudo-time iteration consists of local stencil updates and nearest-neighbour communication only, which scales well across threads, GPUs, and MPI ranks.
 
-## Setup
+## :wrench: Setup
 
 **Julia:** ≥ 1.9  
 **Packages:** `ParallelStencil`, `Plots`, `GLMakie`, `Printf`, `Test`, `CUDA`, `JLD2`, `ImplicitGlobalGrid`
 
 in folders : `scripts`, `Literate` and `vis_scripts_data` have their own environments activate them before running
 
-## Run the simulations
+## :rocket: Run the simulations
 
 ### Locally on your own CPU
 
@@ -173,7 +176,7 @@ export JULIA_CUDA_USE_COMPAT=false # IGG
 srun --uenv julia/25.5:v1 --view=juliaup julia --project PorousConvection_3D_multixpu.jl
 ```
 
-## 📁 Repository Structure
+## :package: Repository Structure
 ```bash
 ├─ scripts/                               # src numerical simulation
 │ ├─ Pf_diffusion_2D_perf_xpu.jl                      
@@ -272,7 +275,7 @@ julia --project vis_3D_slice.jl
 
 
 
-## Unit and Reference Testing
+## :white_check_mark: Unit and Reference Testing
 [![CI action](https://github.com/ragassler/pde-on-gpu-ramura-gassler/actions/workflows/CI.yml/badge.svg)](https://github.com/ragassler/pde-on-gpu-ramura-gassler/actions/workflows/CI.yml)
 
 We provide unit tests (kernel-level checks) and reference tests (end-to-end) for both 2D and 3D:
@@ -345,3 +348,9 @@ julia --project anim_3D.jl # anim_3D_orbit.jl for plumes and downwellings
 The setup in the `Literate/` folder uses **Literate.jl** together with a GitHub Actions workflow (`Literate.yml`).  
 On each run, the action calls `literate_script.jl`, which generates a Markdown file documenting how to save and load data via `.bin` files, including a small example: a random 3×3 array is written to disk, read back, and visualized as a heatmap.
 
+## Discussion and outlook
+
+- The project illustrates that high-performance PDE solvers in Julia can be written in a relatively compact and readable way, while still targeting CPUs, GPUs, and MPI.
+- The overall structure (staggered grid, FD stencils, pseudo-transient solver) is generic and could be reused for other Darcy–type or advection–diffusion problems with minor changes to the physics.
+- I really enjoyed working on the weekly exercises and on this final project.  
+- Thanks to the course lecturers for their guidance, and to **CSCS** for providing access to **Alps**, which made the large-scale runs of this project possible.
