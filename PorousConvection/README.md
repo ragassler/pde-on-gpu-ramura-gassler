@@ -1,13 +1,13 @@
 # PorousConvection
 
-[![CI action](https://github.com/ragassler/pde-on-gpu-ramura-gassler/actions/workflows/CI.yml/badge.svg)](https://github.com/ragassler/pde-on-gpu-ramura-gassler/actions/workflows/CI.yml) | [![Literate action](https://github.com/ragassler/pde-on-gpu-ramura-gassler/actions/workflows/Literate.yml/badge.svg)](https://github.com/ragassler/pde-on-gpu-ramura-gassler/actions/workflows/Literate.yml)
+[![CI action](https://github.com/ragassler/pde-on-gpu-ramura-gassler/actions/workflows/CI.yml/badge.svg)](https://github.com/ragassler/pde-on-gpu-ramura-gassler/actions/workflows/CI.yml)  [![Literate action](https://github.com/ragassler/pde-on-gpu-ramura-gassler/actions/workflows/Literate.yml/badge.svg)](https://github.com/ragassler/pde-on-gpu-ramura-gassler/actions/workflows/Literate.yml)
 
 
 A collection of 2D/3D porous convection solvers written in Julia, with CPU/GPU backends via [ParallelStencil.jl, ImplicitGlobalGrid]. Includes scripts for running simulations, visualization helpers, and a test suite with unit and reference tests.
 
 ## Contents
 
-- [Introduction](#introduction/)
+- [Introduction](#introduction)
 - [Physical model](#physical-model)
 - [Numerical method and parallelisation](#numerical-method-and-parallelisation)
 - [Setup](#setup)
@@ -16,7 +16,7 @@ A collection of 2D/3D porous convection solvers written in Julia, with CPU/GPU b
 - [2D Porous Convection (XPU)](#2d-porous-convection-xpu)
 - [3D Porous Convection (XPU)](#3d-porous-convection-xpu)
 - [Unit and reference testing](#unit-and-reference-testing)
-- [3D MPI porous convection (XPU)](#porous-convection-3d-mpi-xpu--final-goal)
+- [3D MPI porous convection (XPU)](#porous-convection-3d-mpi)
 - [Automatic documentation in Julia](#automatic-documentation-in-julia)
 
 ---
@@ -222,6 +222,7 @@ Parallel CPU/GPU implementation of 2D porous convection with an implicit pseudo�
 Source: `scripts/PorousConvection_2D_xpu.jl`
 
 ![porous_conv2d](docs/porous_convection.gif)
+
 A small initial perturbation in the centre triggers the physical instability.  
 We can observe convection developing through rising hot plumes and sinking cold downwellings.  
 Global grid resolution: 1023 × 511.
@@ -291,7 +292,7 @@ We provide unit tests (kernel-level checks) and reference tests (end-to-end) for
 To run the test go into Pkg mode run command `test`
 
 
-## Porous convection 3D MPI (XPU) final goal
+## Porous convection 3D MPI 
 Parallel multi CPU/GPU MPI implementation of 3D porous convection with an implicit pseudo–time-stepping scheme. inkl. optional saving of Temperature field as .mat files for visualization  
 Source: `scripts/PorousConvection_3D_multixpu.jl`
 
