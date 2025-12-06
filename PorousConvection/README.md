@@ -42,16 +42,13 @@ The unknowns are:
 - Darcy flux **qᴰ(x,y,z,t)** (volume flux through pores),
 - Temperature **T(x,y,z,t)** (deviation from a reference temperature),
 - Pressure **p(x,y,z,t)** (deviation from a hydrostatic reference profile).
-
-To reduce clutter, we work with:
-- the **temperature diffusion flux** qᵀ instead of the Fourier heat flux qᶠ,
+- the **temperature diffusion flux** qᵀ,
 - deviations of pressure and temperature (not absolute values).
 
-The *dimensional* governing equations are:
+The governing equations are:
 
 - **Darcy’s law (momentum in porous medium)**  
-  $$\mathbf{q}_D = -\frac{k}{\eta}
-    \left(\nabla p - \rho_0 \alpha g\, T \, \mathbf{e}_z\right)$$
+  $$\mathbf{q}_D = -\frac{k}{\eta}(\nabla p - \rho_0 \alpha g (T-T_0) \mathbf{e}_z)$$
   \
   where $k$ is permeability, $\eta$ viscosity, $\alpha$ thermal expansivity, and $g$ gravity.
 
@@ -64,11 +61,8 @@ The *dimensional* governing equations are:
   with $\lambda$ thermal conductivity and $\rho_0 c_p$ volumetric heat capacity.
 
 - **Energy equation in porous medium**  
-  $$\frac{\partial T}{\partial t}
-    + \frac{1}{\phi} \, \mathbf{q}_D \cdot \nabla T
-    + \nabla \cdot \mathbf{q}_T = 0,$$
+  $$\frac{\partial T}{\partial t} + \frac{1}{\phi} \mathbf{q}_D \cdot \nabla T + \nabla \cdot \mathbf{q}_T = 0$$
   \
-  
   where $\phi$ is porosity.
 
 In dimensionless form, these equations collapse into a system governed mainly by the **Rayleigh number** $Ra$, which controls the onset and intensity of convection. The 3D solver in this project integrates this system to steady state, starting from a localized thermal perturbation in the middle of the domain. At sufficiently high $Ra$, this perturbation grows into rising hot plumes and sinking cold downwellings.
@@ -81,14 +75,14 @@ The steady-state porous convection system is elliptic–parabolic and nonlinearl
 To solve it efficiently, we use a **pseudo-transient method**:
 
 1. Add pseudo-time derivatives to the **Darcy fluxes** and **temperature fluxes**:
-   - $\theta_D \, \partial_\tau \mathbf{q}_D + \mathbf{q}_D = \text{Darcy RHS}$
-   - $\theta_T \, \partial_\tau \mathbf{q}_T + \mathbf{q}_T = \text{diffusion RHS}$
+   - $\theta_D \partial_\tau \mathbf{q}_D + \mathbf{q}_D = \text{Darcy RHS}$
+   - $\theta_T \partial_\tau \mathbf{q}_T + \mathbf{q}_T = \text{diffusion RHS}$
 
 2. Add a pseudo-compressibility term to the **pressure equation**:
-   - $\beta \, \partial_\tau p + \nabla \cdot \mathbf{q}_D = 0$
+   - $\beta \partial_\tau p + \nabla \cdot \mathbf{q}_D = 0$
 
 3. Combine **physical** and **pseudo** time derivatives in the temperature equation:
-   - $\partial_\tau T + \frac{T - T_{\text{old}}}{\Delta t} + \frac{1}{\phi}\,\mathbf{q}_D\cdot\nabla T + \nabla\cdot\mathbf{q}_T = 0$
+   - $\partial_\tau T + \frac{T - T_{\text{old}}}{\Delta t} + \frac{1}{\phi}\mathbf{q}_D\cdot\nabla T + \nabla\cdot\mathbf{q}_T = 0$
 
 For each physical time step $\Delta t$, we iterate in pseudo-time $\tau$ until the residuals of the pressure and temperature equations fall below a tolerance. This formulation is:
 
