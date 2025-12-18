@@ -30,6 +30,6 @@ jobs:
       - name: commit
         run: |
           # Stage the file, commit and push
-          git add PorousConvection/Literate/*
+          git add PorousConvection/Literate/md/*
           git commit -m "Commit markdown files fom Literate"
           git push --set-upstream origin final-clean  
