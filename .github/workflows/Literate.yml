@@ -1,23 +1,14 @@
 name: Run Literate.jl
+# adapted from https://lannonbr.com/blog/2019-12-09-git-commit-in-actions
 
-
-on:
-  push:
-    branches: [final-clean]
-  pull_request:
-    branches: [main]
-
-permissions:
-  contents: write
+on: push
 
 jobs:
   lit:
     runs-on: ubuntu-latest
     steps:
+      # Checkout the branch
       - uses: actions/checkout@v4
-        with:
-          token: ${{ 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 }}
-          fetch-depth: 0
 
       - uses: julia-actions/setup-julia@latest
         with:
@@ -25,8 +16,6 @@ jobs:
           arch: x64
 
       - uses: julia-actions/cache@v1
-        if: github.event_name == 'push'
-
       - uses: julia-actions/julia-buildpkg@latest
 
       - name: run Literate
@@ -38,30 +27,15 @@ jobs:
             Pkg.instantiate();
             include("literate_script.jl")'
 
-      # On PRs: don't push, just check that nothing changed
-      - name: Check generated files committed (PR)
-        if: github.event_name == 'pull_request'
+      - name: setup git config
         run: |
-          git add -A PorousConvection/Literate -- ':!PorousConvection/Literate/Manifest.toml'
-          if ! git diff --cached --quiet; then
-            echo "Literate outputs are not committed."
-            git diff --cached --name-only
-            exit 1
-          fi
+          # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
 
-      # On pushes to final-clean: commit + push back to final-clean
-      - name: Commit & push generated files (push)
-        if: github.event_name == 'push'
+      - name: commit
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git add -A PorousConvection/Literate -- ':!PorousConvection/Literate/Manifest.toml'
-
-          if git diff --cached --quiet; then
-            echo "No changes to commit."
-            exit 0
-          fi
-
-          git commit -m "chore: update Literate outputs [skip ci]"
-          git push origin HEAD:final-clean
+          # Stage the file, commit and push
+          git add PorousConvection/Literate/md/*
+          git commit -m "Commit markdown files fom Literate"
+          git push origin master
