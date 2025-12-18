@@ -3,9 +3,6 @@ name: Run Literate.jl
 
 on: push
 
-permissions:
-  contents: write 
-
 jobs:
   lit:
     runs-on: ubuntu-latest
