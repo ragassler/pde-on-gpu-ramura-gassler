@@ -1,21 +1,23 @@
 name: Run Literate.jl
-# adapted from https://lannonbr.com/blog/2019-12-09-git-commit-in-actions
 
-on: push
-
-permissions:
-  contents: write 
+on:
+  push:
+    branches: [final-clean]
+    paths:
+      - 'PorousConvection/Literate/**'
+      - '.github/workflows/Literate.yml'
+      - '!PorousConvection/Literate/md/**'   # <- ignore generated outputs
 
 jobs:
   lit:
-    if: github.actor != 'github-actions[bot]'
+    # also skip if the commit message has skip ci (extra safety)
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
     runs-on: ubuntu-latest
     steps:
-      # Checkout the branch
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.CI_PUSH_TOKEN }}  # <-- ADD THIS
-          fetch-depth: 0 
+          token: ${{ secrets.CI_PUSH_TOKEN }}
+          fetch-depth: 0
 
       - uses: julia-actions/setup-julia@latest
         with:
@@ -34,15 +36,17 @@ jobs:
             Pkg.instantiate();
             include("literate_script.jl")'
 
-      - name: setup git config
+      - name: commit generated outputs
         run: |
-          # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
-          git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
+          git config user.name "GitHub Actions"
+          git config user.email "actions@users.noreply.github.com"
 
-      - name: commit
-        run: |
-          # Stage the file, commit and push
-          git add PorousConvection/Literate/md/*
-          git commit -m "Commit markdown files fom Literate"
-          git push origin final-clean
+          git add -A PorousConvection/Literate/md
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "chore: update Literate outputs [skip ci]"
+          git push origin HEAD:final-clean
