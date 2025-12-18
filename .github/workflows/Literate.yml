@@ -3,12 +3,18 @@ name: Run Literate.jl
 
 on: push
 
+permissions:
+  contents: write 
+
 jobs:
   lit:
     runs-on: ubuntu-latest
     steps:
       # Checkout the branch
       - uses: actions/checkout@v4
+        with:
+          token: ${{ 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 }}  # <-- ADD THIS
+          fetch-depth: 0 
 
       - uses: julia-actions/setup-julia@latest
         with:
