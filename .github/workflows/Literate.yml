@@ -8,6 +8,7 @@ permissions:
 
 jobs:
   lit:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       # Checkout the branch
