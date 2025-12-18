@@ -20,3 +20,16 @@ jobs:
 
       - name: run Literate
         run: QT_QPA_PLATFORM=offscreen julia --color=yes --project -e 'cd("PorousConvection/Literate"); import Pkg; Pkg.activate("."); Pkg.instantiate(); include("literate_script.jl")'
+
+      - name: setup git config
+        run: |
+          # setup the username and email. 
+          git config user.name "ragassler"
+          git config user.email "<rgassler@ethz.ch>"
+
+      - name: commit
+        run: |
+          # Stage the file, commit and push
+          git add PorousConvection/Literate/*
+          git commit -m "Commit markdown files fom Literate"
+          git push --set-upstream origin final-clean  
