@@ -48,5 +48,5 @@ jobs:
             exit 0
           fi
 
-          git commit -m "chore: update Literate outputs [skip ci]"
+          git commit -m "Commit markdown files from Literate"
           git push origin HEAD:final-clean
