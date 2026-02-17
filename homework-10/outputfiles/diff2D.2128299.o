@@ -1,0 +1,25 @@
+
+Running diffusion_2D with np = 4
+
+Running diffusion_2D with np = 4
+
+Running diffusion_2D with np = 4
+
+Running diffusion_2D with np = 4
+Global grid: 32766x32766x1 (nprocs: 4, dims: 2x2x1; device support: CUDA-aware)
+Time = 2.067 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.067 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.069 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+ -> T_eff(4) = 2056.874 GB/s
+ -> T_eff(4) = 2055.586 GB/s
+ -> T_eff(4) = 2053.725 GB/s
+ -> T_eff(4) = 2057.060 GB/s
+
+Benchmark data saved to benchmark_weak_4_gpu.mat
+
+Benchmark data saved to benchmark_weak_4_gpu.mat
+
+Benchmark data saved to benchmark_weak_4_gpu.mat
+
+Benchmark data saved to benchmark_weak_4_gpu.mat

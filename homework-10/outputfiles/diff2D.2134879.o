@@ -1,0 +1,385 @@
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+
+Running diffusion_2D with hide_pair = (16, 16)
+Global grid: 131058x131058x1 (nprocs: 64, dims: 8x8x1; device support: CUDA-aware)
+Time = 2.063 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.063 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.063 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.063 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.063 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.063 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.063 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.063 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.063 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.063 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.063 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.064 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.066 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.064 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.066 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.065 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.063 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.064 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.064 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.066 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.064 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.063 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.065 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.065 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.065 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.067 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.065 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.063 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.065 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.063 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.063 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.064 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.065 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.065 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.065 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.065 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.064 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.065 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.065 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.067 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.066 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.066 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.064 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.064 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.066 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.064 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.069 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.067 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.063 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.067 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.069 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.069 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.069 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.069 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.068 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.069 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.069 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.070 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.069 sec, T_eff = 2060.00 GB/s (niter = 990)
+Time = 2.069 sec, T_eff = 2050.00 GB/s (niter = 990)
+Time = 2.068 sec, T_eff = 2060.00 GB/s (niter = 990)
+ -> Time((16, 16)) = 2.069 GB/s
+ -> Time((16, 16)) = 2.065 GB/s
+ -> Time((16, 16)) = 2.065 GB/s
+ -> Time((16, 16)) = 2.066 GB/s
+ -> Time((16, 16)) = 2.067 GB/s
+ -> Time((16, 16)) = 2.069 GB/s
+ -> Time((16, 16)) = 2.065 GB/s
+ -> Time((16, 16)) = 2.065 GB/s
+ -> Time((16, 16)) = 2.063 GB/s
+ -> Time((16, 16)) = 2.065 GB/s
+ -> Time((16, 16)) = 2.065 GB/s
+ -> Time((16, 16)) = 2.063 GB/s
+ -> Time((16, 16)) = 2.068 GB/s
+ -> Time((16, 16)) = 2.063 GB/s
+ -> Time((16, 16)) = 2.067 GB/s
+ -> Time((16, 16)) = 2.069 GB/s
+ -> Time((16, 16)) = 2.065 GB/s
+ -> Time((16, 16)) = 2.065 GB/s
+ -> Time((16, 16)) = 2.063 GB/s
+ -> Time((16, 16)) = 2.070 GB/s
+ -> Time((16, 16)) = 2.069 GB/s
+ -> Time((16, 16)) = 2.070 GB/s
+ -> Time((16, 16)) = 2.070 GB/s
+ -> Time((16, 16)) = 2.063 GB/s
+ -> Time((16, 16)) = 2.065 GB/s
+ -> Time((16, 16)) = 2.064 GB/s
+ -> Time((16, 16)) = 2.069 GB/s
+ -> Time((16, 16)) = 2.067 GB/s
+ -> Time((16, 16)) = 2.064 GB/s
+ -> Time((16, 16)) = 2.063 GB/s
+ -> Time((16, 16)) = 2.066 GB/s
+ -> Time((16, 16)) = 2.064 GB/s
+ -> Time((16, 16)) = 2.063 GB/s
+ -> Time((16, 16)) = 2.069 GB/s
+ -> Time((16, 16)) = 2.070 GB/s
+ -> Time((16, 16)) = 2.063 GB/s
+ -> Time((16, 16)) = 2.063 GB/s
+ -> Time((16, 16)) = 2.063 GB/s
+ -> Time((16, 16)) = 2.063 GB/s
+ -> Time((16, 16)) = 2.066 GB/s
+ -> Time((16, 16)) = 2.069 GB/s
+ -> Time((16, 16)) = 2.069 GB/s
+ -> Time((16, 16)) = 2.063 GB/s
+ -> Time((16, 16)) = 2.063 GB/s
+ -> Time((16, 16)) = 2.064 GB/s
+ -> Time((16, 16)) = 2.067 GB/s
+ -> Time((16, 16)) = 2.065 GB/s
+ -> Time((16, 16)) = 2.066 GB/s
+ -> Time((16, 16)) = 2.068 GB/s
+ -> Time((16, 16)) = 2.066 GB/s
+ -> Time((16, 16)) = 2.065 GB/s
+ -> Time((16, 16)) = 2.063 GB/s
+ -> Time((16, 16)) = 2.063 GB/s
+ -> Time((16, 16)) = 2.064 GB/s
+ -> Time((16, 16)) = 2.064 GB/s
+ -> Time((16, 16)) = 2.063 GB/s
+ -> Time((16, 16)) = 2.066 GB/s
+ -> Time((16, 16)) = 2.063 GB/s
+ -> Time((16, 16)) = 2.069 GB/s
+ -> Time((16, 16)) = 2.064 GB/s
+ -> Time((16, 16)) = 2.065 GB/s
+ -> Time((16, 16)) = 2.064 GB/s
+ -> Time((16, 16)) = 2.064 GB/s
+ -> Time((16, 16)) = 2.064 GB/s
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
+
+Benchmark data saved to benchmark_hide_(16, 16)_gpu.mat
