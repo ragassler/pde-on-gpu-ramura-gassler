@@ -1,0 +1,147 @@
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+
+Running diffusion_2D with np = 25
+Global grid: 81912x81912x1 (nprocs: 25, dims: 5x5x1; device support: CUDA-aware)
+Time = 2.041 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.044 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.044 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.044 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.041 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.047 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.046 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.045 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.042 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.041 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.043 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.046 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.047 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.044 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.043 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.047 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.038 sec, T_eff = 2090.00 GB/s (niter = 990)
+Time = 2.040 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.049 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.041 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.046 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.042 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.047 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.043 sec, T_eff = 2080.00 GB/s (niter = 990)
+Time = 2.040 sec, T_eff = 2080.00 GB/s (niter = 990)
+ -> T_eff(25) = 2078.795 GB/s
+ -> T_eff(25) = 2077.009 GB/s
+ -> T_eff(25) = 2075.228 GB/s
+ -> T_eff(25) = 2077.033 GB/s
+ -> T_eff(25) = 2079.921 GB/s
+ -> T_eff(25) = 2079.738 GB/s
+ -> T_eff(25) = 2079.755 GB/s
+ -> T_eff(25) = 2076.975 GB/s
+ -> T_eff(25) = 2078.226 GB/s
+ -> T_eff(25) = 2083.228 GB/s
+ -> T_eff(25) = 2077.221 GB/s
+ -> T_eff(25) = 2081.802 GB/s
+ -> T_eff(25) = 2078.540 GB/s
+ -> T_eff(25) = 2078.526 GB/s
+ -> T_eff(25) = 2080.242 GB/s
+ -> T_eff(25) = 2081.698 GB/s
+ -> T_eff(25) = 2083.210 GB/s
+ -> T_eff(25) = 2082.984 GB/s
+ -> T_eff(25) = 2082.688 GB/s
+ -> T_eff(25) = 2081.581 GB/s
+ -> T_eff(25) = 2084.374 GB/s
+ -> T_eff(25) = 2081.423 GB/s
+ -> T_eff(25) = 2086.257 GB/s
+ -> T_eff(25) = 2084.797 GB/s
+ -> T_eff(25) = 2082.866 GB/s
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat
+
+Benchmark data saved to benchmark_weak_25_gpu.mat

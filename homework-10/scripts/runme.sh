@@ -1,0 +1,15 @@
+#!/bin/bash -l
+#SBATCH --account=class04
+#SBATCH --job-name="diff2D"
+#SBATCH --output=diff2D.%j.o
+#SBATCH --error=diff2D.%j.e
+#SBATCH --time=02:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=4
+#SBATCH --gpus-per-task=1
+
+export MPICH_GPU_SUPPORT_ENABLED=1
+export IGG_CUDAAWARE_MPI=1 # IGG
+export JULIA_CUDA_USE_COMPAT=false # IGG
+
+srun --uenv julia/25.5:v1 --view=juliaup julia --project Pf_Diffusion_2D_xpu_perf.jl
