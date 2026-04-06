@@ -1,0 +1,52 @@
+name: Run Literate.jl
+
+on:
+  push:
+    branches: [final-clean]
+    paths:
+      - 'PorousConvection/Literate/**'
+      - '.github/workflows/Literate.yml'
+      - '!PorousConvection/Literate/md/**'   # <- ignore generated outputs
+
+jobs:
+  lit:
+    # also skip if the commit message has skip ci (extra safety)
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.CI_PUSH_TOKEN }}
+          fetch-depth: 0
+
+      - uses: julia-actions/setup-julia@latest
+        with:
+          version: '1.12'
+          arch: x64
+
+      - uses: julia-actions/cache@v1
+      - uses: julia-actions/julia-buildpkg@latest
+
+      - name: run Literate
+        run: |
+          QT_QPA_PLATFORM=offscreen julia --color=yes --project -e '
+            cd("PorousConvection/Literate");
+            import Pkg;
+            Pkg.activate(".");
+            Pkg.instantiate();
+            include("literate_script.jl")'
+
+      - name: commit generated outputs
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@users.noreply.github.com"
+
+          git add -A PorousConvection/Literate/md
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "Commit markdown files from Literate"
+          git push origin HEAD:final-clean

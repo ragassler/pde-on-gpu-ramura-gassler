@@ -1,2 +1,5 @@
 .DS_Store
 Manifest.toml
+vis_scripts_data/viz3Dmpi_out/
+vis_scripts_data/viz3Dmpi_out_large/
+vis_scripts_data/viz3Dmpi_out_small/
